@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BackjoonProject
 {
-    class Question
+    class Question1000
     {
         public void Q1000()
         {
@@ -214,6 +214,56 @@ namespace BackjoonProject
 
                 Console.WriteLine($"{resultTime[w]}");
             }
+        }
+
+        public void Q1008()
+        {
+            int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+            Console.WriteLine((double)A[0] / A[1]);
+        }
+
+        public void Q1026()
+        {
+            int n = Convert.ToInt32(Console.ReadLine());
+
+            int[] a = new int[n];
+            int[] b = new int[n];
+
+            string[] strA = Console.ReadLine().Split();
+            string[] strB = Console.ReadLine().Split();
+
+            for (int i = 0; i < n; i++)
+            {
+                a[i] = int.Parse(strA[i]);
+                b[i] = int.Parse(strB[i]);
+            }
+
+            Array.Sort(a);
+            Array.Sort(b, (a, b) => (a > b) ? -1 : 1);
+
+            int sum = 0;
+
+            for (int i = 0; i < n; i++)
+                sum += (a[i] * b[i]);
+
+            Console.WriteLine(sum);
+        }
+
+        public void Q1094()
+        {
+            int x = Convert.ToInt32(Console.ReadLine());
+
+            int count = 0;
+
+            while (x > 0)
+            {
+                if (x % 2 == 1)
+                    count++;
+                x /= 2;
+            }
+
+            Console.WriteLine(count);
         }
     }
 }
