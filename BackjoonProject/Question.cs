@@ -8,6 +8,7 @@ namespace BackjoonProject
     {
         public void Q1000()
         {
+            https://www.acmicpc.net/problem/1000
             string[] data = Console.ReadLine().Split();
             int length = data.Length;
             int sum = 0;
@@ -21,12 +22,14 @@ namespace BackjoonProject
 
         public void Q1001()
         {
+            https://www.acmicpc.net/problem/1001
             string[] data = Console.ReadLine().Split();
             Console.WriteLine(int.Parse(data[0]) - int.Parse(data[1]));
         }
 
         public void Q1002()
         {
+            https://www.acmicpc.net/problem/1002
             // https://mathbang.net/101 참고자료
 
             int a = Convert.ToInt32(Console.ReadLine());
@@ -70,6 +73,7 @@ namespace BackjoonProject
         // 피보나치 메모이제이션
         public void Q1003()
         {
+            https://www.acmicpc.net/problem/1003
             int[,] fibo = new int[41, 2];
 
             int a = Convert.ToInt32(Console.ReadLine());
@@ -110,6 +114,7 @@ namespace BackjoonProject
 
         public void Q1004 ()
         {
+            https://www.acmicpc.net/problem/1004
             int length = Convert.ToInt32(Console.ReadLine());
             for (int i = 0; i < length; i++)
             {
@@ -143,6 +148,71 @@ namespace BackjoonProject
                 }
 
                 Console.WriteLine(count);
+            }
+        }
+
+        public void Q1005() 
+        {
+            https://www.acmicpc.net/problem/1005
+            int[] inDegree;
+            int length = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < length; i++)
+            {
+                string[] str = Console.ReadLine().Split();
+
+                // 건물 갯수 N, 건설 순서 규칙 총 개수 K
+                (int n, int k) = (int.Parse(str[0]), int.Parse(str[1]));
+
+                int[] nTime = new int[n + 1];
+                int[] resultTime = new int[n + 1];
+                string[] str2 = Console.ReadLine().Split();
+                for (int j = 0; j < n; j++)
+                {
+                    nTime[j + 1] = int.Parse(str2[j]); // 걸리는 시간
+                    resultTime[j + 1] = int.Parse(str2[j]); // 가중치 줄 시간
+                }
+
+                List<int>[] insertEdge = new List<int>[n + 1];
+
+                for (int j = 0; j < n + 1; j++)
+                    insertEdge[j] = new List<int>();
+
+                inDegree = new int[n + 1];
+                for (int j = 0; j < k; j++)
+                {
+                    string[] str3 = Console.ReadLine().Split();
+                    insertEdge[int.Parse(str3[0])].Add(int.Parse(str3[1])); // 건설 순서
+                    inDegree[int.Parse(str3[1])]++; // 진입 갯수
+                }
+
+                int w = int.Parse(Console.ReadLine());
+
+                Queue<int> queue = new Queue<int>();
+
+                for (int j = 1; j < n + 1; j++)
+                {
+                    if (j == w)
+                        continue;
+                    else if (inDegree[j] == 0)
+                        queue.Enqueue(j);
+                }
+
+                while (!(queue.Count == 0))
+                {
+                    int idx = queue.Dequeue();
+
+                    for (int j = 0; j < insertEdge[idx].Count; j++)
+                    {
+                        int value = insertEdge[idx][j];
+
+                        resultTime[value] = (int)MathF.Max(resultTime[value], resultTime[idx] + nTime[value]); // 가는 방향에 가중치
+
+                        if (--inDegree[value] == 0)
+                            queue.Enqueue(value);
+                    }
+                }
+
+                Console.WriteLine($"{resultTime[w]}");
             }
         }
     }
