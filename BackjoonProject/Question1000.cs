@@ -265,5 +265,19 @@ namespace BackjoonProject
 
             Console.WriteLine(count);
         }
+
+        public void Q1330()
+        {
+            int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+            if (data[0] == data[1])
+                Console.WriteLine("==");
+            else if (data[0] > data[1])
+                Console.WriteLine(">");
+            else
+                Console.WriteLine("<");
+        }
+
+       
     }
 }
