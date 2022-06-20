@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BackjoonProject
@@ -223,6 +224,112 @@ namespace BackjoonProject
             Console.WriteLine((double)A[0] / A[1]);
         }
 
+        public void Q1009()
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+                int result = 1;
+                for (int j = 0; j < data[1]; j++)
+                    result = (result * data[0]) % 10;
+
+                if (result == 0)
+                    result = 10;
+
+                Console.WriteLine($"{result}");
+            }
+        }
+
+        public void Q1010()
+        {
+            int t = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < t; i++)
+            {
+                int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+                int n = data[0];
+                int m = data[1];
+
+                // mCn
+                int a = n > (m - n) ? n : (m - n);
+                long result = 1;
+
+                for (int j = a + 1; j <= m; j++)
+                    result *= j;
+
+                for (int j = 1; j <= (m - a); j++)
+                    result /= j;
+
+                Console.WriteLine(result);
+            }
+        }
+
+        public void Q1012()
+        {
+            int t = int.Parse(Console.ReadLine());
+            for (int i = 0; i < t; i++)
+            {
+                int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+                int x = data[0];
+                int y = data[1];
+                int count = data[2];
+
+                int[,] arry = new int[x, y];
+                int[,] visited = new int[x, y];
+
+                for (int j = 0; j < count; j++)
+                {
+                    string[] str = Console.ReadLine().Split(' ');
+                    arry[int.Parse(str[0]), int.Parse(str[1])] = 1;
+                }
+
+                Console.WriteLine(BFS(x, y, arry, visited));
+            }
+
+            int BFS(int x, int y, int[,] arry, int[,] visited)
+            {
+                Queue<(int, int)> queue = new Queue<(int, int)>();
+                int[] dx = new int[] { 1, 0, -1, 0 };
+                int[] dy = new int[] { 0, 1, 0, -1 };
+
+                int result = 0;
+                for (int i = 0; i < x; i++)
+                {
+                    for (int j = 0; j < y; j++)
+                    {
+                        if (visited[i, j] == 1 || arry[i, j] == 0)
+                            continue;
+
+                        queue.Enqueue((i, j));
+                        result++;
+                        while (queue.Count != 0)
+                        {
+                            var cur = queue.Dequeue();
+                            int curx = cur.Item1;
+                            int cury = cur.Item2;
+
+                            for (int dir = 0; dir < 4; dir++)
+                            {
+                                int nx = cur.Item1 + dx[dir];
+                                int ny = cur.Item2 + dy[dir];
+                                if (nx < 0 || nx >= x || ny < 0 || ny >= y)
+                                    continue;
+                                if (visited[nx, ny] == 1 || arry[nx, ny] != 1)
+                                    continue;
+
+                                visited[nx, ny] = 1;
+                                queue.Enqueue((nx, ny));
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+
         public void Q1026()
         {
             int n = Convert.ToInt32(Console.ReadLine());
@@ -250,6 +357,111 @@ namespace BackjoonProject
             Console.WriteLine(sum);
         }
 
+        public void Q1032()
+        {
+            StringBuilder builder = new StringBuilder();
+            int n = int.Parse(Console.ReadLine());
+            string[] name = new string[n];
+
+            string s = string.Empty;
+
+            for (int i = 0; i < n; i++)
+                name[i] = Console.ReadLine();
+
+            int length = name[0].Length;
+            for (int i = 0; i < length; i++)
+            {
+                s = string.Empty;
+                for (int j = 1; j < n; j++)
+                {
+                    if (name[0][i] != name[j][i])
+                    {
+                        s = "?";
+                        break;
+                    }
+                }
+
+                if (s == string.Empty)
+                    s = name[0][i].ToString();
+
+                builder.Append(s);
+            }
+
+            Console.WriteLine(builder);
+        }
+
+        public void Q1037()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int[] number = new int[n];
+
+            number = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+            Console.WriteLine(number.Min() * number.Max());
+        }
+
+        public void Q1075()
+        {
+            int temp, i;
+            int n = int.Parse(Console.ReadLine());
+            int f = int.Parse(Console.ReadLine());
+
+            n = (n / 100) * 100;
+
+            for (i = 0; i < 100; i++)
+            {
+                temp = n;
+
+                if ((temp += i) % f == 0)
+                    break;
+            }
+
+            if (i < 10)
+                Console.Write(0);
+
+            Console.Write(i);
+        }
+
+        public void Q1076()
+        {
+            Dictionary<string, (long, long)> dict = new Dictionary<string, (long, long)>();
+            dict.Add("black", (0, 1));
+            dict.Add("brown", (1, 10));
+            dict.Add("red", (2, 100));
+            dict.Add("orange", (3, 1000));
+            dict.Add("yellow", (4, 10000));
+            dict.Add("green", (5, 100000));
+            dict.Add("blue", (6, 1000000));
+            dict.Add("violet", (7, 10000000));
+            dict.Add("grey", (8, 100000000));
+            dict.Add("white", (9, 1000000000));
+
+            string a = Console.ReadLine();
+            string b = Console.ReadLine();
+            string c = Console.ReadLine();
+
+            long value = (dict[a].Item1 * 10 + dict[b].Item1) * dict[c].Item2;
+            Console.WriteLine(value);
+        }
+
+        public void Q1085()
+        {
+            int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+            int x = data[0];
+            int y = data[1];
+            int w = data[2];
+            int h = data[3];
+
+            int[] result = new int[4];
+            result[0] = x;
+            result[1] = y;
+            result[2] = w - x;
+            result[3] = h - y;
+
+            Console.WriteLine(result.Min());
+        }
+
         public void Q1094()
         {
             int x = Convert.ToInt32(Console.ReadLine());
@@ -265,6 +477,45 @@ namespace BackjoonProject
 
             Console.WriteLine(count);
         }
+        public void Q1110()
+        {
+            string n = Console.ReadLine();
+            int added;
+
+            if (10 > int.Parse(n))
+                n += 0;
+
+            string originalN = n;
+
+            int count = 0;
+            while (true)
+            {
+                count++;
+                int x = int.Parse(n) / 10;
+                int y = int.Parse(n) % 10;
+
+                added = x + y;
+
+                n = y.ToString() + (added % 10).ToString();
+
+                if (int.Parse(n) == int.Parse(originalN))
+                    break;
+            }
+
+            Console.WriteLine(count);
+        }
+        public void Q1152()
+        {
+            string[] str = Console.ReadLine().Split();
+            int length = str.Length;
+            int count = 0;
+            for (int i = 0; i < length; i++)
+            {
+                if (str[i] == "")
+                    count++;
+            }
+            Console.WriteLine(str.Length - count);
+        }
 
         public void Q1330()
         {
@@ -278,6 +529,20 @@ namespace BackjoonProject
                 Console.WriteLine("<");
         }
 
-       
+        public void Q1546()
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            int[] grade = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            float max = grade.ToList().Max();
+
+            float sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                sum += grade[i] / max * 100;
+            }
+
+            Console.WriteLine((float)sum / n);
+        }
     }
 }

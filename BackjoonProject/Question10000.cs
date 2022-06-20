@@ -116,6 +116,28 @@ namespace BackjoonProject
             }
         }
 
+        public void Q10989()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int[] nArray = new int[10001];
+
+            for (int i = 0; i < n; i++)
+            {
+                int num = int.Parse(reader.ReadLine());
+                nArray[num]++;
+            }
+
+            for (int i = 0; i < 10001; i++)
+                for (int j = 0; j < nArray[i]; j++)
+                    writer.WriteLine(i);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10998()
         {
             int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
@@ -157,6 +179,22 @@ namespace BackjoonProject
             }
 
             Console.WriteLine(builder);
+        }
+
+        public void Q11720()
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            char[] c = Console.ReadLine().ToCharArray();
+
+            int length = c.Length;
+            int sum = 0;
+            for (int i = 0; i < length; i++)
+            {
+                sum += int.Parse(c[i].ToString());
+            }
+
+            Console.WriteLine(sum);
         }
 
         public void Q14681()

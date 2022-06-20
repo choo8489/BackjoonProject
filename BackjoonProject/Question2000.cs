@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -96,6 +97,45 @@ namespace BackjoonProject
 
             Console.WriteLine($"{max}");
             Console.WriteLine($"{result + 1}");
+        }
+
+        public void Q2571()
+        {
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int[] nArray = new int[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                nArray[i] = int.Parse(reader.ReadLine());
+            }
+
+            Array.Sort(nArray);
+
+            StringBuilder builder = new StringBuilder(string.Join("\n", nArray));
+            Console.WriteLine(builder);
+
+            reader.Close();
+        }
+
+        public void Q2577()
+        {
+            int a = int.Parse(Console.ReadLine());
+            int b = int.Parse(Console.ReadLine());
+            int c = int.Parse(Console.ReadLine());
+
+            int sum = a * b * c;
+
+            char[] ch = sum.ToString().ToCharArray();
+            int[] result = new int[10];
+
+            int length = ch.Length;
+            for (int i = 0; i < length; i++)
+                result[int.Parse(ch[i].ToString())]++;
+
+            for (int i = 0; i < 10; i++)
+                Console.WriteLine(result[i]);
         }
 
         public void Q2588()
