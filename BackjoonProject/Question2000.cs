@@ -158,6 +158,122 @@ namespace BackjoonProject
             Console.WriteLine(num1 * int.Parse(b));
         }
 
+        public void Q2606()
+        {
+            int cnt = 0;
+            int[] visited;
+            List<int>[] list;
+            Queue<int> queue;
+
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int m = int.Parse(reader.ReadLine());
+
+            list = new List<int>[n + 1];
+            visited = new int[n + 1];
+            queue = new Queue<int>();
+
+            for (int i = 1; i < n + 1; i++)
+                list[i] = new List<int>();
+
+            for (int i = 0; i < m; i++)
+            {
+                // 양방향
+                int[] line = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+                list[line[0]].Add(line[1]);
+                list[line[1]].Add(line[0]);
+            }
+
+            queue.Enqueue(1);
+            visited[1] = 1;
+
+            while (queue.Count != 0)
+            {
+                int q = queue.Dequeue();
+
+                for (int i = 0; i < list[q].Count; i++)
+                {
+                    int temp = list[q][i];
+                    if (visited[temp] != 1)
+                    {
+                        cnt++;
+                        visited[temp] = 1;
+                        queue.Enqueue(temp);
+                    }
+                }
+            }
+
+            writer.WriteLine(cnt);
+        }
+
+        public void Q2667()
+        {
+            int[] dx = new int[] { 1, 0, -1, 0 };
+            int[] dy = new int[] { 0, 1, 0, -1 };
+
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(Console.ReadLine());
+            int[,] arry = new int[n, n];
+            int[] result = new int[n * n]; // (n * n / 2) + 1
+            int count = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                string data = Console.ReadLine();
+
+                for (int j = 0; j < n; j++)
+                    arry[i, j] = int.Parse(data[j].ToString());
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (arry[i, j] == 1)
+                    {
+                        count++;
+                        DFS(i, j, count + 1);
+                    }
+                }
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (arry[i, j] > 1)
+                        result[arry[i, j]]++;
+                }
+            }
+
+            writer.WriteLine(count);
+            Array.Sort(result);
+            for (int i = 0; i < result.Length; i++)
+                if (result[i] != 0)
+                    writer.WriteLine(result[i]);
+
+            void DFS(int x, int y, int count)
+            {
+                arry[x, y] = count;
+
+                for (int dir = 0; dir < 4; dir++)
+                {
+                    int nx = x + dx[dir];
+                    int ny = y + dy[dir];
+
+                    if ((nx >= 0 && nx < n) && (ny >= 0 && ny < n) && arry[nx, ny] == 1)
+                        DFS(nx, ny, count);
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2739()
         {
             int data = int.Parse(Console.ReadLine());
