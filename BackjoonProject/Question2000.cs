@@ -8,6 +8,58 @@ namespace BackjoonProject
 {
     class Question2000
     {
+        public void Q2178()
+        {
+            int[] dx = new int[] { 1, 0, -1, 0 };
+            int[] dy = new int[] { 0, 1, 0, -1 };
+
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] data = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int n = data[0];
+            int m = data[1];
+
+            int[,] miro = new int[n, m];
+            int[,] visited = new int[n, m];
+
+            for (int i = 0; i < n; i++)
+            {
+                string str = reader.ReadLine();
+
+                for (int j = 0; j < m; j++)
+                    miro[i, j] = int.Parse(str[j].ToString());
+            }
+
+            Queue<(int, int)> queue = new Queue<(int, int)>();
+            queue.Enqueue((0, 0));
+            visited[0, 0] = 1;
+
+            while (queue.Count != 0)
+            {
+                var cur = queue.Dequeue();
+
+                for (int dir = 0; dir < 4; dir++)
+                {
+                    int nx = cur.Item1 + dx[dir];
+                    int ny = cur.Item2 + dy[dir];
+
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= m)
+                        continue;
+                    if (visited[nx, ny] == 0 && miro[nx, ny] == 1)
+                    {
+                        visited[nx, ny] = visited[cur.Item1, cur.Item2] + 1;
+                        queue.Enqueue((nx, ny));
+                    }
+                }
+            }
+
+            writer.WriteLine(visited[n - 1, m - 1]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2438()
         {
             int n = int.Parse(Console.ReadLine());
