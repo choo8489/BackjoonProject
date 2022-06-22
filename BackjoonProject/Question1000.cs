@@ -630,5 +630,45 @@ namespace BackjoonProject
 
             Console.WriteLine((float)sum / n);
         }
+
+        public void Q1697()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] data = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int n = data[0];
+            int k = data[1];
+            bool[] visited = new bool[100001];
+
+            Queue<(int, int)> queue = new Queue<(int, int)>();
+
+            queue.Enqueue((n, 0));
+            int result = 0;
+
+            while (queue.Count != 0)
+            {
+                var q = queue.Dequeue();
+
+                if (q.Item1 < 0 || q.Item1 > 100000)
+                    continue;
+                if (visited[q.Item1])
+                    continue;
+
+                visited[q.Item1] = true;
+
+                if (q.Item1 == k)
+                    result = q.Item2;
+
+                queue.Enqueue((q.Item1 * 2, q.Item2 + 1));
+                queue.Enqueue((q.Item1 + 1, q.Item2 + 1));
+                queue.Enqueue((q.Item1 - 1, q.Item2 + 1));
+            }
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
     }
 }
