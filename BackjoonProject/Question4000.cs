@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BackjoonProject
@@ -31,6 +32,34 @@ namespace BackjoonProject
 
                 Console.WriteLine($"{MathF.Round(result, 3):0.000}%");
             }
+        }
+
+        public void Q4673()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+
+            int[] cnt = new int[100001];
+
+            for (int i = 1; i < 10000; i++)
+                D(i);
+
+            void D(int n)
+            {
+                char[] ch = n.ToString().ToCharArray();
+
+                int result = n;
+                for (int i = 0; i < ch.Length; i++)
+                    result += int.Parse(ch[i].ToString());
+
+                cnt[result]++;
+            }
+
+            for (int i = 1; i < 10000; i++)
+            {
+                if (cnt[i] == 0)
+                    writer.WriteLine(i);
+            }
+            writer.Close();
         }
     }
 }
