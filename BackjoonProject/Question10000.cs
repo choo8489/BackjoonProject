@@ -181,6 +181,13 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q11654()
+        {
+            string str = Console.ReadLine();
+
+            Console.WriteLine((int)str[0]);
+        }
+
         public void Q11720()
         {
             int n = int.Parse(Console.ReadLine());

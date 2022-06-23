@@ -326,6 +326,27 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2675()
+        {
+            int t = int.Parse(Console.ReadLine());
+
+            for (int n = 0; n < t; n++)
+            {
+                string[] str = Console.ReadLine().Split();
+
+                int r = int.Parse(str[0]);
+                string s = str[1];
+
+                for (int i = 0; i < s.Length; i++)
+                {
+                    for (int j = 0; j < r; j++)
+                        Console.Write(s[i]);
+                }
+
+                Console.Write("\n");
+            }
+        }
+
         public void Q2739()
         {
             int data = int.Parse(Console.ReadLine());

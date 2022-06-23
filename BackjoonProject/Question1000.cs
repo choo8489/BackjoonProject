@@ -401,6 +401,37 @@ namespace BackjoonProject
             Console.WriteLine(number.Min() * number.Max());
         }
 
+        public void Q1065()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int count = 0;
+
+            for (int i = 1; i < n + 1; i++)
+            {
+                if (FindAP(i))
+                    count++;
+            }
+
+            Console.WriteLine(count);
+
+            bool FindAP(int num)
+            {
+                if (num < 100)
+                    return true;
+
+                string str = num.ToString();
+                int[] numbers = new int[str.Length];
+
+                for (int i = 0; i < str.Length; i++)
+                    numbers[i] = int.Parse(str[i].ToString());
+
+                if (numbers[0] - numbers[1] == numbers[1] - numbers[2])
+                    return true;
+
+                return false;
+            }
+        }
+
         public void Q1075()
         {
             int temp, i;
