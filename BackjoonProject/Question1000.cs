@@ -549,6 +549,41 @@ namespace BackjoonProject
             Console.WriteLine(str.Length - count);
         }
 
+        public void Q1157()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string str = reader.ReadLine().ToUpper();
+            int[] counts = new int[26];
+
+            for (int i = 0; i < str.Length; i++)
+                counts[str[i] - 'A']++;
+
+            int max = 0;
+            int maxIndex = -1;
+            bool duplicated = false;
+
+            for (int i = 0; i < counts.Length; i++)
+            {
+                if (counts[i] > max)
+                {
+                    max = counts[i];
+                    maxIndex = i;
+                    duplicated = false;
+                }
+                else if (counts[i] == max)
+                {
+                    duplicated = true;
+                }
+            }
+
+            writer.WriteLine(duplicated == true ? '?' : (char)(maxIndex + 'A'));
+
+            reader.Close();
+            writer.Close();
+        }
+
         public void Q1260()
         {
             int[] visited;
