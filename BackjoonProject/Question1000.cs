@@ -669,6 +669,36 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1316()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int cnt = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (Word(Console.ReadLine()))
+                    cnt++;
+            }
+
+            Console.WriteLine(cnt);
+
+            bool Word(string s)
+            {
+                for (int i = 0; i < s.Length; i++)
+                {
+                    for (int j = i; j < s.Length; j++)
+                    {
+                        if (j - i > 1 && s[i] == s[j])
+                            return false;
+                        if (s[i] == s[j])
+                            i += j - i;
+                    }
+                }
+
+                return true;
+            }
+        }
+
         public void Q1330()
         {
             int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
@@ -735,6 +765,26 @@ namespace BackjoonProject
 
             writer.Close();
             reader.Close();
+        }
+
+        public void Q1712()
+        {
+            int[] value = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int a = value[0];
+            int b = value[1];
+            int c = value[2];
+
+            if (b >= c)
+            {
+                Console.WriteLine(-1);
+                return;
+            }
+
+            // a+bn = cn
+            // a = cn - bn
+            // a = n(c-b)
+            // a / (c-b) = n
+            Console.WriteLine((a / (c - b)) + 1);
         }
     }
 }

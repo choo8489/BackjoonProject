@@ -408,5 +408,33 @@ namespace BackjoonProject
 
             Console.WriteLine($"{h} {m}");
         }
+
+        public void Q2908()
+        {
+            string[] data = Console.ReadLine().Split();
+
+            string a = data[0];
+            string b = data[1];
+
+            string ra = a[2].ToString() + a[1] + a[0];
+            string rb = b[2].ToString() + b[1] + b[0];
+
+            if (int.Parse(ra) > int.Parse(rb))
+                Console.WriteLine(ra);
+            else
+                Console.WriteLine(rb);
+        }
+
+        public void Q2941()
+        {
+            string str = Console.ReadLine();
+
+            string[] croatia = { "c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=" };
+
+            for (int i = 0; i < croatia.Length; i++)
+                str = str.Replace(croatia[i], " ");
+
+            Console.WriteLine(str.Length);
+        }
     }
 }
