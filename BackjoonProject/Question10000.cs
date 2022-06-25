@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using static System.Console;
+
 namespace BackjoonProject
 {
     class Question10000
@@ -24,6 +26,41 @@ namespace BackjoonProject
             Console.WriteLine(((data[0] % data[2]) + (data[1] % data[2])) % data[2]);
             Console.WriteLine((data[0] * data[1]) % data[2]);
             Console.WriteLine(((data[0] % data[2]) * (data[1] % data[2])) % data[2]);
+        }
+
+        public void Q10757()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] str = reader.ReadLine().Split();
+
+            float max = MathF.Max(str[0].Length, str[1].Length);
+
+            int[] a = new int[(int)max + 1];
+            int[] b = new int[(int)max + 1];
+
+            for (int i = str[0].Length - 1, j = 0; i >= 0; i--, j++)
+                a[j] = int.Parse(str[0][i].ToString());
+
+            for (int i = str[1].Length - 1, j = 0; i >= 0; i--, j++)
+                b[j] = int.Parse(str[1][i].ToString());
+
+            for (int i = 0; i < (int)max; i++)
+            {
+                int value = a[i] + b[i];
+                a[i] = value % 10;
+                a[i + 1] += (value / 10);
+            }
+
+            if (a[(int)max] != 0)
+                writer.Write(a[(int)max]);
+
+            for (int i = (int)max - 1; i >= 0; i--)
+                writer.Write(a[i]);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q10818()

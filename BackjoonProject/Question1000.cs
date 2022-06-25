@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using static System.Console;
+
 namespace BackjoonProject
 {
     class Question1000
@@ -582,6 +584,27 @@ namespace BackjoonProject
 
             reader.Close();
             writer.Close();
+        }
+
+        public void Q1193()
+        {
+            int n = int.Parse(ReadLine());
+
+            int line = 0;
+            int sum = 0;
+
+            while (n > sum)
+            {
+                line++;
+                sum += line;
+            }
+
+            int i = n - (sum - line);
+
+            if (line % 2 == 1)
+                Write($"{line - i + 1}/{ i}");
+            else
+                Write($"{i}/{line - i + 1}");
         }
 
         public void Q1260()

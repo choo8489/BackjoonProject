@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
+using static System.Console;
+
 namespace BackjoonProject
 {
     class Question2000
@@ -55,6 +57,28 @@ namespace BackjoonProject
             }
 
             writer.WriteLine(visited[n - 1, m - 1]);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q2292()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+
+            int room = 1;
+            int cnt = 1;
+
+            while (n > room)
+            {
+                room += 6 * cnt;
+                cnt++;
+            }
+
+            writer.WriteLine(cnt);
 
             writer.Close();
             reader.Close();
@@ -375,6 +399,39 @@ namespace BackjoonProject
                 builder.Append($"{i}\n");
 
             Console.WriteLine(builder);
+        }
+
+        public void Q2775()
+        {
+            int t = int.Parse(ReadLine());
+
+            int[,] cnt = new int[15, 15];
+
+            for (int i = 0; i < t; i++)
+            {
+                int k = int.Parse(ReadLine());
+                int n = int.Parse(ReadLine());
+
+                for (int j = 1; j <= k; j++)
+                    cnt[j, 1] = 1;
+
+                for (int j = 1; j <= n; j++)
+                    cnt[0, j] = j;
+
+                for (int j = 1; j <= k; j++)
+                {
+                    for (int z = 1; z <= n; z++)
+                    {
+                        int sum = 0;
+                        for (int a = 1; a <= z; a++)
+                            sum += cnt[j - 1, a];
+
+                        cnt[j, z] = sum;
+                    }
+                }
+
+                WriteLine(cnt[k, n]);
+            }
         }
 
         public void Q2753()
