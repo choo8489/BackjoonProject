@@ -444,6 +444,65 @@ namespace BackjoonProject
                 Console.WriteLine("0");
         }
 
+        public void Q2839()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+
+            int cnt = 0;
+
+            while (n > 0)
+            {
+                if (n % 5 == 0)
+                {
+                    n -= 5;
+                    cnt++;
+                }
+                else if (n % 3 == 0)
+                {
+                    n -= 3;
+                    cnt++;
+                }
+                else if (n > 5)
+                {
+                    n -= 5;
+                    cnt++;
+                }
+                else
+                {
+                    cnt = -1;
+                    break;
+                }
+            }
+
+            writer.WriteLine(cnt);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q2869()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            long[] data = Array.ConvertAll(reader.ReadLine().Split(), long.Parse);
+            long a = data[0];
+            long b = data[1];
+            long v = data[2];
+
+            long cnt = 0;
+
+            cnt = (v - b - 1) / (a - b) + 1;
+
+            WriteLine(cnt);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2884()
         {
             int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);

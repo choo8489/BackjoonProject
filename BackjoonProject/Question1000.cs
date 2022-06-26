@@ -809,5 +809,43 @@ namespace BackjoonProject
             // a / (c-b) = n
             Console.WriteLine((a / (c - b)) + 1);
         }
+
+        public void Q1978()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int[] primeNum = new int[1001];
+
+            for (int i = 2; i <= 1000; i++)
+                primeNum[i] = i;
+
+            float num = MathF.Sqrt(1000);
+            for (int i = 2; i <= num; i++)
+            {
+                if (primeNum[i] == 0)
+                    continue;
+
+                for (int j = i * i; j <= 1000; j += i)
+                    primeNum[j] = 0;
+            }
+
+
+            int n = int.Parse(reader.ReadLine());
+
+            int[] value = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            int cnt = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (primeNum[value[i]] != 0)
+                    cnt++;
+            }
+
+            writer.WriteLine(cnt);
+
+            writer.Close();
+            reader.Close();
+        }
     }
 }

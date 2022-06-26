@@ -18,6 +18,45 @@ namespace BackjoonProject
             Console.WriteLine("|\"^\"`    |");
             Console.WriteLine("||_/=\\\\__|");
         }
+
+        public void Q10250()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int t = int.Parse(reader.ReadLine());
+
+            for (int i = 0; i < t; i++)
+            {
+                int[] data = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+                int h = data[0];
+                int w = data[1];
+                int n = data[2];
+
+                int cnt = 0;
+
+                for (int j = 1; j <= w; j++)
+                {
+                    for (int z = 1; z <= h; z++)
+                    {
+                        cnt++;
+
+                        if (n == cnt)
+                        {
+                            writer.WriteLine($"{z}{j:00}");
+                            break;
+                        }
+                    }
+
+                    if (n == cnt)
+                        break;
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10434()
         {
             int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
@@ -216,6 +255,32 @@ namespace BackjoonProject
             }
 
             Console.WriteLine(builder);
+        }
+
+        public void Q11653()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<int> result = new List<int>();
+
+            for (int i = 2; i <= n; i++)
+            {
+                while (n % i == 0)
+                {
+                    result.Add(i);
+                    n /= i;
+                }
+            }
+
+            int count = result.Count;
+
+            for (int i = 0; i < count; i++)
+                writer.WriteLine(result[i]);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q11654()
