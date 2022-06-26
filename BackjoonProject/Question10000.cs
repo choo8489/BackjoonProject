@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using static System.Console;
+using static BackjoonProject.Tools;
 
 namespace BackjoonProject
 {
@@ -126,6 +127,22 @@ namespace BackjoonProject
             Console.WriteLine(A[0] * A[1]);
             Console.WriteLine(A[0] / A[1]);
             Console.WriteLine(A[0] % A[1]);
+        }
+
+        public void Q10870()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+
+            int result = 0;
+            result += Fibonacci(n);
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q10871()

@@ -214,6 +214,56 @@ namespace BackjoonProject
                 Console.WriteLine(result[i]);
         }
 
+        public void Q2581()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int max = 10000 + 1;
+            int[] primeNum = new int[max + 1];
+
+            for (int i = 2; i < max; i++)
+                primeNum[i] = i;
+
+            float num = MathF.Sqrt(max);
+            for (int i = 2; i <= num; i++)
+            {
+                if (primeNum[i] == 0)
+                    continue;
+
+                for (int j = i * i; j <= max; j += i)
+                    primeNum[j] = 0;
+            }
+
+            int m = int.Parse(reader.ReadLine());
+            int n = int.Parse(reader.ReadLine());
+
+            List<int> result = new List<int>();
+            int sum = 0;
+
+            for (int i = m; i <= n; i++)
+            {
+                if (primeNum[i] != 0)
+                {
+                    result.Add(primeNum[i]);
+                    sum += primeNum[i];
+                }
+            }
+
+            if (sum == 0)
+            {
+                writer.WriteLine(-1);
+            }
+            else
+            {
+                writer.WriteLine(sum);
+                writer.WriteLine(result.Min());
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2588()
         {
             string a = Console.ReadLine();
@@ -399,6 +449,92 @@ namespace BackjoonProject
                 builder.Append($"{i}\n");
 
             Console.WriteLine(builder);
+        }
+
+        public void Q2747()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int[,] fibo = new int[46, 2];
+
+            int n = int.Parse(ReadLine());
+
+            Fibonacci(n);
+            WriteLine($"{fibo[n, 1]}");
+
+            (int, int) Fibonacci(int n)
+            {
+                if (n == 0)
+                {
+                    fibo[n, 0] = 1;
+                    fibo[n, 1] = 0;
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+                else if (n == 1)
+                {
+                    fibo[n, 0] = 0;
+                    fibo[n, 1] = 1;
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+
+                if (fibo[n, 0] != 0 && fibo[n, 1] != 0)
+                {
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+                else
+                {
+                    fibo[n, 0] = Fibonacci(n - 1).Item1 + Fibonacci(n - 2).Item1;
+                    fibo[n, 1] = Fibonacci(n - 1).Item2 + Fibonacci(n - 2).Item2;
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q2748()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            long[,] fibo = new long[91, 2];
+
+            long n = int.Parse(ReadLine());
+
+            Fibonacci(n);
+            WriteLine($"{fibo[n, 1]}");
+
+            (long, long) Fibonacci(long n)
+            {
+                if (n == 0)
+                {
+                    fibo[n, 0] = 1;
+                    fibo[n, 1] = 0;
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+                else if (n == 1)
+                {
+                    fibo[n, 0] = 0;
+                    fibo[n, 1] = 1;
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+
+                if (fibo[n, 0] != 0 && fibo[n, 1] != 0)
+                {
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+                else
+                {
+                    fibo[n, 0] = Fibonacci(n - 1).Item1 + Fibonacci(n - 2).Item1;
+                    fibo[n, 1] = Fibonacci(n - 1).Item2 + Fibonacci(n - 2).Item2;
+                    return (fibo[n, 0], fibo[n, 1]);
+                }
+            }
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q2775()

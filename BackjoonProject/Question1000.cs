@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 
 using static System.Console;
+using static BackjoonProject.Tools;
 
 namespace BackjoonProject
 {
@@ -808,6 +809,27 @@ namespace BackjoonProject
             // a = n(c-b)
             // a / (c-b) = n
             Console.WriteLine((a / (c - b)) + 1);
+        }
+
+        public void Q1929()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int[] primeNum = Eratosthenes(1000000 + 1);
+
+            string[] str = reader.ReadLine().Split();
+            int m = int.Parse(str[0]);
+            int n = int.Parse(str[1]);
+
+            for (int i = m; i <= n; i++)
+            {
+                if (primeNum[i] != 0)
+                    writer.WriteLine(primeNum[i]);
+            }
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1978()
