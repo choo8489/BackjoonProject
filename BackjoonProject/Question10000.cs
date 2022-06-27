@@ -162,6 +162,32 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q10872()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(ReadLine());
+            int sum = 1;
+            Factorial(n);
+
+            writer.WriteLine(sum);
+
+            writer.Close();
+            reader.Close();
+
+            int Factorial(int n)
+            {
+
+                if (n == 0)
+                    return 0;
+
+                sum *= n;
+
+                return Factorial(n - 1);
+            }
+        }
+
         public void Q10926()
         {
             string id = Console.ReadLine();

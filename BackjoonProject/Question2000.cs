@@ -120,6 +120,57 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q2447()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(ReadLine());
+            double m = MathF.Pow(3, 7);
+            char[,] map = new char[(int)m, (int)m];
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < m; j++)
+                    map[i, j] = ' ';
+            }
+
+            Result(n, 0, 0);
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                    writer.Write(map[i, j]);
+
+                writer.WriteLine();
+            }
+
+            void Result(int n, int x, int y)
+            {
+                if (n == 1)
+                {
+                    map[x, y] = '*';
+                    return;
+                }
+
+                int div = n / 3;
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (i == 1 && j == 1)
+                            continue;
+
+                        Result(div, x + (div * i), y + (div * j));
+                    }
+                }
+                return;
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2480()
         {
             int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
