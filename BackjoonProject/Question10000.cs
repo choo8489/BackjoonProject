@@ -349,6 +349,43 @@ namespace BackjoonProject
             Console.WriteLine(sum);
         }
 
+        public void Q11729()
+        {
+            StringBuilder builder = new StringBuilder();
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int cnt = 0;
+
+            Recursion(n, 1, 2, 3);
+
+            writer.WriteLine(cnt);
+
+            writer.WriteLine(builder);
+
+            reader.Close();
+            writer.Close();
+
+            void Recursion(int n, int from, int mid, int to)
+            {
+                if (n == 1)
+                {
+                    builder.AppendLine($"{from} {to}");
+                    cnt++;
+                }
+                else
+                {
+                    Recursion(n - 1, from, to, mid);
+
+                    builder.AppendLine($"{from} {to}");
+                    cnt++;
+
+                    Recursion(n - 1, mid, from, to);
+                }
+            }
+        }
+
         public void Q14681()
         {
             int x = int.Parse(Console.ReadLine());
