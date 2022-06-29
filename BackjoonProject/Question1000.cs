@@ -334,6 +334,52 @@ namespace BackjoonProject
             }
         }
 
+        public void Q1018()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] value = reader.ReadLine().Split();
+            int N = int.Parse(value[0]);
+            int M = int.Parse(value[1]);
+
+            char[,] panel = new char[M, N];
+
+            for (int i = 0; i < N; i++)
+            {
+                string line = reader.ReadLine();
+
+                for (int j = 0; j < M; j++)
+                    panel[j, i] = line[j];
+            }
+
+            float cnt = 8 * 8;
+
+            for (int i = 0; i <= N - 8; i++)
+            {
+                for (int j = 0; j <= M - 8; j++)
+                {
+                    float num = 0;
+                    for (int a = i; a < i + 8; a++)
+                    {
+                        for (int b = j; b < j + 8; b++)
+                        {
+                            var c = (a + b) % 2 == 0 ? 'W' : 'B';
+                            if (c != panel[b, a])
+                                num++;
+                        }
+                    }
+                    num = MathF.Min(num, 64 - num);
+                    cnt = MathF.Min(cnt, num);
+                }
+            }
+
+            writer.WriteLine(cnt);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1026()
         {
             int n = Convert.ToInt32(Console.ReadLine());

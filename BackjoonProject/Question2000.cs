@@ -62,6 +62,38 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2231()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int sum = 0;
+
+            writer.WriteLine(Result());
+
+            writer.Close();
+            reader.Close();
+
+            int Result()
+            {
+                for (int i = 0; i < N; i++)
+                {
+                    string s = i.ToString();
+                    sum += i;
+                    for (int j = 0; j < s.Length; j++)
+                        sum += int.Parse(s[j].ToString());
+
+                    if (sum == N)
+                        return i;
+
+                    sum = 0;
+                }
+
+                return 0;
+            }
+        }
+
         public void Q2292()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
@@ -738,6 +770,51 @@ namespace BackjoonProject
                 str = str.Replace(croatia[i], " ");
 
             Console.WriteLine(str.Length);
+        }
+
+        public void Q2978()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] data = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int n = data[0];
+            int m = data[1];
+
+            int[] num = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            writer.WriteLine(BlackJack());
+
+            writer.Close();
+            reader.Close();
+
+            int BlackJack()
+            {
+                int max = 0;
+                int sum = 0;
+
+                for (int i = 0; i < n - 2; i++)
+                {
+                    for (int j = i + 1; j < n - 1; j++)
+                    {
+                        for (int k = j + 1; k < n; k++)
+                        {
+                            sum = num[i] + num[j] + num[k];
+
+                            if (sum == m)
+                                return sum;
+
+                            if (sum > m)
+                                continue;
+
+                            if (sum > max)
+                                max = sum;
+                        }
+                    }
+                }
+
+                return max;
+            }
         }
     }
 }
