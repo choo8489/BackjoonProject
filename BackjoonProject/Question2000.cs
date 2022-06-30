@@ -226,26 +226,6 @@ namespace BackjoonProject
             Console.WriteLine($"{result + 1}");
         }
 
-        public void Q2571()
-        {
-            StreamReader reader = new StreamReader(Console.OpenStandardInput());
-
-            int n = int.Parse(reader.ReadLine());
-            int[] nArray = new int[n];
-
-            for (int i = 0; i < n; i++)
-            {
-                nArray[i] = int.Parse(reader.ReadLine());
-            }
-
-            Array.Sort(nArray);
-
-            StringBuilder builder = new StringBuilder(string.Join("\n", nArray));
-            Console.WriteLine(builder);
-
-            reader.Close();
-        }
-
         public void Q2577()
         {
             int a = int.Parse(Console.ReadLine());
@@ -585,6 +565,46 @@ namespace BackjoonProject
             }
 
             writer.Close();
+            reader.Close();
+        }
+
+        public void Q2750()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int[] nArray = new int[n];
+
+            for (int i = 0; i < n; i++)
+                nArray[i] = int.Parse(reader.ReadLine());
+
+            Array.Sort(nArray);
+
+            StringBuilder builder = new StringBuilder(string.Join("\n", nArray));
+            writer.WriteLine(builder);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q2751()
+        {
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int[] nArray = new int[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                nArray[i] = int.Parse(reader.ReadLine());
+            }
+
+            Array.Sort(nArray);
+
+            StringBuilder builder = new StringBuilder(string.Join("\n", nArray));
+            Console.WriteLine(builder);
+
             reader.Close();
         }
 

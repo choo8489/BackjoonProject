@@ -735,6 +735,35 @@ namespace BackjoonProject
                 Console.WriteLine("<");
         }
 
+        public void Q1436()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+
+            int cnt = 0;
+            int start = 666;
+
+            while (true)
+            {
+                // 영화 제목에 666이 포함되면 cnt를 증가
+                if (start.ToString().Contains("666"))
+                    cnt++;
+
+                // 입력 받은 값이랑 같으면 반복문 중단
+                if (n == cnt)
+                    break;
+
+                start++;
+            }
+
+            writer.Write($"{start}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1546()
         {
             int n = int.Parse(Console.ReadLine());
