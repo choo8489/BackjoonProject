@@ -203,6 +203,23 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2475()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] n = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            int sum = 0;
+            for (int i = 0; i < n.Length; i++)
+                sum += n[i] * n[i];
+
+            writer.WriteLine(sum % 10);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2480()
         {
             int[] data = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
@@ -778,6 +795,27 @@ namespace BackjoonProject
                 Console.WriteLine(ra);
             else
                 Console.WriteLine(rb);
+        }
+
+        public void Q2920()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] n = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            List<int> ascending = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
+            List<int> descending = new List<int>() { 8, 7, 6, 5, 4, 3, 2, 1 };
+
+            if (n.ToList().SequenceEqual(ascending))
+                writer.WriteLine("ascending");
+            else if (n.ToList().SequenceEqual(descending))
+                writer.WriteLine("descending");
+            else
+                writer.WriteLine("mixed");
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q2941()

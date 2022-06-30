@@ -633,6 +633,31 @@ namespace BackjoonProject
             writer.Close();
         }
 
+        public void Q1181()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<string> str = new List<string>();
+
+            for (int i = 0; i < n; i++)
+            {
+                string s = reader.ReadLine();
+                str.Add(s);
+            }
+
+            str = str.Distinct().ToList();
+            str.Sort();
+            List<string> str2 = str.OrderBy(x => x.Length).ToList();
+
+            for (int i = 0; i < str2.Count; i++)
+                writer.WriteLine(str2[i]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1193()
         {
             int n = int.Parse(ReadLine());
@@ -652,6 +677,36 @@ namespace BackjoonProject
                 Write($"{line - i + 1}/{ i}");
             else
                 Write($"{i}/{line - i + 1}");
+        }
+
+        public void Q1259()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            while (true)
+            {
+                string n = reader.ReadLine();
+
+                if (n[0] == '0')
+                    break;
+
+                writer.WriteLine(Result(n));
+            }
+
+            writer.Close();
+            reader.Close();
+
+            string Result(string n)
+            {
+                for (int i = 0, j = n.Length - 1; i < n.Length; i++, j--)
+                {
+                    if (int.Parse(n[i].ToString()) != int.Parse(n[j].ToString()))
+                        return "no";
+                }
+
+                return "yes";
+            }
         }
 
         public void Q1260()
