@@ -118,6 +118,61 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q10828()
+        {
+            // List로 Stack 구현
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            List<int> stack = new List<int>();
+
+            int n = int.Parse(reader.ReadLine());
+
+            string[] push = new string[2];
+            string str;
+            for (int i = 0; i < n; i++)
+            {
+                str = reader.ReadLine();
+
+                if (str.Contains("push"))
+                    push = str.Split();
+
+                switch (str)
+                {
+                    case "top":
+                        if (stack.Count > 0)
+                            writer.WriteLine(stack.Last());
+                        else
+                            writer.WriteLine(-1);
+                        break;
+                    case "pop":
+                        if (stack.Count > 0)
+                        {
+                            writer.WriteLine(stack.Last());
+                            stack.RemoveAt(stack.Count - 1);
+                        }
+                        else
+                        {
+                            writer.WriteLine(-1);
+                        }
+                        break;
+                    case "size":
+                        writer.WriteLine(stack.Count);
+                        break;
+                    case "empty":
+                        writer.WriteLine((stack.Count == 0) ? 1 : 0);
+                        break;
+                    default:
+                        stack.Add(int.Parse(push[1].ToString()));
+                        break;
+                }
+            }
+
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10869()
         {
             int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);

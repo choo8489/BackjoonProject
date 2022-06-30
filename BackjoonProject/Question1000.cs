@@ -941,6 +941,124 @@ namespace BackjoonProject
             Console.WriteLine((a / (c - b)) + 1);
         }
 
+        public void Q1920()
+        {
+            // 기본 List 서치방식
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<int> a = Array.ConvertAll(reader.ReadLine().Split(), int.Parse).ToList();
+            int m = int.Parse(reader.ReadLine());
+            int[] result = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            int print = 0;
+            for (int i = 0; i < m; i++)
+            {
+                print = (a.Contains(result[i])) ? 1 : 0;
+                writer.WriteLine(print);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1920_2()
+        {
+            // 이진탐색
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<int> a = Array.ConvertAll(reader.ReadLine().Split(), int.Parse).ToList();
+            int m = int.Parse(reader.ReadLine());
+            int[] b = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            a.Sort();
+            int[] result = new int[b.Length];
+
+            for (int i = 0; i < m; i++)
+            {
+                int start = 0;
+                int end = a.Count - 1;
+                int middle = 0;
+
+                while (true)
+                {
+                    middle = (start + end) / 2;
+                    if (middle == start)
+                    {
+                        if (a[start] == b[i] || a[end] == b[i])
+                            result[i] = 1;
+                        else
+                            result[i] = 0;
+                        break;
+                    }
+                    else if (a[middle] == b[i])
+                    {
+                        result[i] = 1;
+                        break;
+                    }
+                    else if (a[middle] > b[i])
+                    {
+                        end = middle;
+                    }
+                    else if (a[middle] < b[i])
+                    {
+                        start = middle;
+                    }
+                }
+            }
+
+            StringBuilder sb = new StringBuilder(string.Join("\n", result));
+
+            writer.WriteLine(sb);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1920_3()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<int> a = Array.ConvertAll(reader.ReadLine().Split(), int.Parse).ToList();
+            int m = int.Parse(reader.ReadLine());
+            int[] b = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            a.Sort();
+            int[] result = new int[b.Length];
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < m; i++)
+            {
+                int start = 0;
+                int end = a.Count - 1;
+                bool found = false;
+
+                while (start <= end && !found)
+                {
+                    int middle = (start + end) / 2;
+
+                    if (a[middle] == b[i])
+                        found = true;
+                    else if (a[middle] > b[i])
+                        end = middle - 1;
+                    else
+                        start = middle + 1;
+                }
+                sb.Append(found ? "1\n" : "0\n");
+            }
+
+            writer.WriteLine(sb);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1929()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
