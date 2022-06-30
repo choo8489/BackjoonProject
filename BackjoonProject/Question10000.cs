@@ -419,6 +419,50 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q17478()
+        {
+            // 문제를 틀렸습니다. ( 나중에 문제 해결 할예정 )
+            StringBuilder builder = new StringBuilder();
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+
+            int max = n;
+
+            writer.WriteLine("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.");
+            Recursion(n);
+
+            reader.Close();
+            writer.Close();
+
+            void Recursion(int n)
+            {
+                if (n == 0)
+                {
+                    writer.WriteLine(builder + "\"재귀함수가 뭔가요 ? \"");
+                    writer.WriteLine(builder + "\"재귀함수는 자기 자신을 호출하는 함수라네\"");
+
+                    for (int i = 1; i <= max; i++)
+                    {
+                        writer.WriteLine(builder + "라고 답변하였지.");
+
+                        builder.Remove((max * 4) - (i * 4), 4);
+                    }
+                    writer.WriteLine("라고 답변하였지.");
+                    return;
+                }
+
+                writer.WriteLine(builder + "\"재귀함수가 뭔가요 ? \"");
+                writer.WriteLine(builder + "\"잘 들어보게.옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.");
+                writer.WriteLine(builder + "마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.");
+                writer.WriteLine(builder + "그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"");
+                builder.Append("____");
+
+                Recursion(n - 1);
+            }
+        }
+
         public void Q18108()
         {
             int y = int.Parse(Console.ReadLine());
