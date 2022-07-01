@@ -9,6 +9,49 @@ namespace BackjoonProject
 {
     class Question9000
     {
+        public void Q9012()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+            Stack<char> stack = new Stack<char>();
+
+            for (int i = 0; i < T; i++)
+                writer.WriteLine(FindVPS());
+
+            writer.Close();
+            reader.Close();
+
+            string FindVPS()
+            {
+                stack.Clear();
+                string str = reader.ReadLine();
+
+                for (int j = 0; j < str.Length; j++)
+                {
+                    if (str[j] == '(')
+                        stack.Push(str[j]);
+                    else
+                    {
+                        if (stack.TryPop(out char value))
+                        {
+                            if (value == ')')
+                                return "NO";
+                        }
+                        else
+                            return "NO";
+
+                    }
+                }
+
+                if (stack.Count > 0)
+                    return "NO";
+
+                return "YES";
+            }
+        }
+
         public void Q9020()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());

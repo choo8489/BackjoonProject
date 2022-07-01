@@ -103,6 +103,29 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q10773()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int k = int.Parse(reader.ReadLine());
+            Stack<int> stack = new Stack<int>();
+
+            for (int i = 0; i < k; i++)
+            {
+                int num = int.Parse(reader.ReadLine());
+                if (num == 0)
+                    stack.Pop();
+                else
+                    stack.Push(num);
+            }
+
+            writer.WriteLine(stack.Sum());
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10818()
         {
             int n = int.Parse(Console.ReadLine());
