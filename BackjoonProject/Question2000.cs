@@ -414,6 +414,36 @@ namespace BackjoonProject
             writer.WriteLine(cnt);
         }
 
+        public void Q2609()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] value = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            int gcd, lcd;
+            // 최대공약수 ( 유클리트 호제법 )
+            gcd = GCD(value[0], value[1]);
+            // 최소공배수 ( 두수의 곱 / 최대공약수 )
+            lcd = (value[0] * value[1] / gcd);
+
+            writer.WriteLine(gcd);
+            writer.WriteLine(lcd);
+
+            writer.Close();
+            reader.Close();
+
+            int GCD(int x, int y)
+            {
+                //두 수 n, m 이 있을 때 어느 한 수가 0이 될 때 까지
+                //gcd(m, n%m) 의 재귀함수 반복
+                if (y == 0)
+                    return x;
+                else
+                    return GCD(y, x % y);
+            }
+        }
+
         public void Q2667()
         {
             int[] dx = new int[] { 1, 0, -1, 0 };

@@ -9,6 +9,32 @@ namespace BackjoonProject
 {
     class Question4000
     {
+        public void Q4153()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            while (true)
+            {
+                int[] value = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                if (value[0] == 0 && value[1] == 0 && value[2] == 0)
+                    break;
+
+                Array.Sort(value);
+
+                int a = value[2] * value[2];
+                int b = value[0] * value[0] + value[1] * value[1];
+
+                if (a == b)
+                    writer.WriteLine("right");
+                else
+                    writer.WriteLine("wrong");
+            }
+
+            writer.Close();
+            reader.Close();
+        }
         public void Q4344()
         {
             int c = int.Parse(Console.ReadLine());
@@ -100,6 +126,67 @@ namespace BackjoonProject
                 }
 
                 writer.WriteLine(cnt);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q4949()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            Stack<char> stack = new Stack<char>();
+            bool result;
+
+            while (true)
+            {
+                string str = reader.ReadLine();
+
+                if (str == ".")
+                    break;
+
+                result = false;
+
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (str[i] == '(' || str[i] == '[')
+                    {
+                        stack.Push(str[i]);
+                    }
+                    else if (str[i] == ')')
+                    {
+                        if (stack.Count > 0 && stack.Peek() == '(')
+                        {
+                            stack.Pop();
+                        }
+                        else
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                    else if (str[i] == ']')
+                    {
+                        if (stack.Count > 0 && stack.Peek() == '[')
+                        {
+                            stack.Pop();
+                        }
+                        else
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (result || stack.Count > 0)
+                    writer.WriteLine("no");
+                else
+                    writer.WriteLine("yes");
+
+                stack.Clear();
             }
 
             writer.Close();
