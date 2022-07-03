@@ -126,6 +126,58 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q10814()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<(int, string)> data = new List<(int, string)>();
+
+            for (int i = 0; i < n; i++)
+            {
+                string[] value = reader.ReadLine().Split();
+
+                data.Add((int.Parse(value[0]), value[1]));
+            }
+
+            // C# 문법 LINQ 로 정렬
+            var sortList = data.OrderBy(x => x.Item1).ToList();
+
+            for (int i = 0; i < n; i++)
+                writer.WriteLine($"{sortList[i].Item1} {sortList[i].Item2}");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q10816()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            string[] str = reader.ReadLine().Split();
+            int[] x = new int[20000001]; // 음수 + 양수
+
+            // 카운트 소팅
+            for (int i = 0; i < n; i++)
+                x[10000000 + int.Parse(str[i])]++;
+
+            int m = int.Parse(reader.ReadLine());
+            string[] str2 = reader.ReadLine().Split();
+            int[] y = new int[m];
+
+            for (int i = 0; i < m; i++)
+                y[i] = int.Parse(str2[i]);
+
+            for (int i = 0; i < m; i++)
+                writer.Write($"{x[10000000 + y[i]]} ");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10818()
         {
             int n = int.Parse(Console.ReadLine());
@@ -191,6 +243,143 @@ namespace BackjoonProject
                 }
             }
 
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q10845()
+        {
+            // List로 Queue 구현
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            List<int> queue = new List<int>();
+
+            int n = int.Parse(reader.ReadLine());
+
+            string[] push = new string[2];
+            string str;
+            for (int i = 0; i < n; i++)
+            {
+                str = reader.ReadLine();
+
+                if (str.Contains("push"))
+                    push = str.Split();
+
+                switch (str)
+                {
+                    case "back":
+                        if (queue.Count > 0)
+                            writer.WriteLine(queue.Last());
+                        else
+                            writer.WriteLine(-1);
+                        break;
+                    case "front":
+                        if (queue.Count > 0)
+                            writer.WriteLine(queue[0]);
+                        else
+                            writer.WriteLine(-1);
+                        break;
+                    case "pop":
+                        if (queue.Count > 0)
+                        {
+                            writer.WriteLine(queue[0]);
+                            queue.RemoveAt(0);
+                        }
+                        else
+                        {
+                            writer.WriteLine(-1);
+                        }
+                        break;
+                    case "size":
+                        writer.WriteLine(queue.Count);
+                        break;
+                    case "empty":
+                        writer.WriteLine((queue.Count == 0) ? 1 : 0);
+                        break;
+                    default:
+                        queue.Add(int.Parse(push[1].ToString()));
+                        break;
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q10866()
+        {
+            // List로 Deque 구현
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            List<int> Deque = new List<int>();
+
+            int n = int.Parse(reader.ReadLine());
+
+            string[] push = new string[2];
+            string str;
+            for (int i = 0; i < n; i++)
+            {
+                str = reader.ReadLine();
+
+                if (str.Contains("push"))
+                {
+                    push = str.Split();
+                    str = push[0].ToString();
+                }
+
+                switch (str)
+                {
+                    case "push_front":
+                        Deque.Insert(0, int.Parse(push[1].ToString()));
+                        break;
+                    case "push_back":
+                        Deque.Add(int.Parse(push[1].ToString()));
+                        break;
+                    case "pop_back":
+                        if (Deque.Count > 0)
+                        {
+                            writer.WriteLine(Deque.Last());
+                            Deque.RemoveAt(Deque.Count - 1);
+                        }
+                        else
+                            writer.WriteLine(-1);
+                        break;
+                    case "pop_front":
+                        if (Deque.Count > 0)
+                        {
+                            writer.WriteLine(Deque[0]);
+                            Deque.RemoveAt(0);
+                        }
+                        else
+                        {
+                            writer.WriteLine(-1);
+                        }
+                        break;
+                    case "size":
+                        writer.WriteLine(Deque.Count);
+                        break;
+                    case "empty":
+                        writer.WriteLine((Deque.Count == 0) ? 1 : 0);
+                        break;
+                    case "front":
+                        if (Deque.Count > 0)
+                            writer.WriteLine(Deque[0]);
+                        else
+                            writer.WriteLine(-1);
+                        break;
+                    case "back":
+                        if (Deque.Count > 0)
+                            writer.WriteLine(Deque.Last());
+                        else
+                            writer.WriteLine(-1);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             writer.Close();
             reader.Close();
@@ -378,6 +567,96 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q11050()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] str = reader.ReadLine().Split();
+            int n = int.Parse(str[0]);
+            int k = int.Parse(str[1]);
+
+            // 전체 집합에서 원소의 개수 n에 대해 k개의 아이템을 뽑는 이항계수(조합의 수)는 다음과 같다.
+            // (n k) = nCk = n! / (n-k)!*k! (단, 0<=k<=n)
+            int result = Factorial(n) / (Factorial(n - k) * Factorial(k));
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+
+            int Factorial(int n)
+            {
+                if (n == 0)
+                    return 1;
+                else
+                    return n * Factorial(n - 1);
+            }
+        }
+
+        public void Q11050_1()
+        {
+            // 이항계수의 성질
+            // (n k) = (n n-k) => n개 중에서 k개를 간택하는 것은 선택받지 못할 나머지 (n-k)개를 선택하는 것과 같다.
+            // 성질 1
+            // 2^n = nC0 + nC1 + nC2 + ... + nCn
+            // 2^n - 1 = nC1 + nC2 + ... + nCn
+            // 성질2
+            // nC1 + nC3 + nC5 + ... = nC0 + nC2 + nC4 + ...
+            // 홀수 = 짝수 => 홀수 = 2^n-1  짝수 = 2^n-1
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+
+            string[] str = reader.ReadLine().Split();
+            int n = int.Parse(str[0]);
+            int k = int.Parse(str[1]);
+
+            writer.WriteLine(Binomial(n, k));
+
+            writer.Close();
+            reader.Close();
+
+            int Binomial(int n, int k)
+            {
+                // 파스칼 삼각형
+                if (n == k || k == 0)
+                    return 1;
+
+                // n-1Ck-1 까지의 합과 n-1Ck까지의 합을 더한 값
+                return Binomial(n - 1, k - 1) + Binomial(n - 1, k);
+            }
+        }
+
+        public void Q11650()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<(int, int)> list = new List<(int, int)>();
+            for (int i = 0; i < n; i++)
+            {
+                string[] str = reader.ReadLine().Split();
+                int x = int.Parse(str[0].ToString());
+                int y = int.Parse(str[1].ToString());
+                list.Add((x, y));
+            }
+
+            // x 좌표로 정렬하고, y좌표로 정렬
+            var sortList = list.OrderBy(x => x.Item1).ThenBy(x => x.Item2).ToList();
+
+            //var sortList = (from data in list
+            //                orderby data.Item1, data.Item2
+            //                select data).ToList();
+
+            for (int i = 0; i < n; i++)
+                writer.WriteLine($"{sortList[i].Item1} {sortList[i].Item2}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q11653()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
@@ -462,6 +741,67 @@ namespace BackjoonProject
                     Recursion(n - 1, mid, from, to);
                 }
             }
+        }
+
+        public void Q11866()
+        {
+            // 요세푸스 순열
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] str = reader.ReadLine().Split();
+            int n = int.Parse(str[0].ToString());
+            int k = int.Parse(str[1].ToString());
+
+            List<int> list = new List<int>();
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < n; i++)
+                list.Add(i + 1);
+
+            // K개 1이 아니라면 체크
+            if (k != 1)
+            {
+                result.Add(list[k - 1]);
+                list.RemoveAt(k - 1);
+            }
+
+            int index = k - 1;
+
+            while (true)
+            {
+                if (list.Count == 1)
+                {
+                    result.Add(list[0]);
+                    break;
+                }
+
+                // 빼야되는 index의 위치를 찾습니다.
+                int count = list.Count;
+                for (int i = 1; i < k; i++)
+                {
+                    index += 1;
+
+                    if (index > count - 1)
+                        index = index - count;
+                }
+
+                // 빼야되는 index를 result 리스트에 넣어주고 list에서 제거
+                result.Add(list[index]);
+                list.RemoveAt(index);
+            }
+
+            writer.Write("<");
+            for (int i = 0; i < n; i++)
+            {
+                if (i < n - 1)
+                    writer.Write($"{result[i]}, ");
+                else
+                    writer.Write($"{result[i]}>\n");
+            }
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q14681()

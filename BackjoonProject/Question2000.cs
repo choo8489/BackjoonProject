@@ -10,6 +10,36 @@ namespace BackjoonProject
 {
     class Question2000
     {
+        public void Q2164()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            Queue<int> queue = new Queue<int>();
+
+            for (int i = 1; i < n + 1; i++)
+                queue.Enqueue(i);
+
+            if (!(queue.Count == 1))
+            {
+                while (true)
+                {
+                    queue.Dequeue();
+                    if (queue.Count == 1)
+                        break;
+                    int x = queue.Dequeue();
+                    queue.Enqueue(x);
+                }
+            }
+
+            int result = queue.Dequeue();
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2178()
         {
             int[] dx = new int[] { 1, 0, -1, 0 };
