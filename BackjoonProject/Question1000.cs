@@ -881,6 +881,60 @@ namespace BackjoonProject
             Console.WriteLine((float)sum / n);
         }
 
+        public void Q1654()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] str = reader.ReadLine().Split();
+            int k = int.Parse(str[0].ToString());
+            int n = int.Parse(str[1].ToString());
+
+            List<long> list = new List<long>();
+
+            for (int i = 0; i < k; i++)
+                list.Add(int.Parse(reader.ReadLine()));
+
+            long max = list.Max();
+
+            writer.WriteLine(FindMaxLAN());
+
+            writer.Close();
+            reader.Close();
+
+            long FindMaxLAN()
+            {
+                long start = 1;
+                long end = max;
+                long middle;
+                long sum = 0;
+
+                while (true)
+                {
+                    // start가 end보다 커지는 순간 프로그램 종료
+                    if (start > end)
+                        break;
+
+                    // 이분탐색 중간 값
+                    middle = (start + end) / 2;
+
+                    // 리스트 k의 값을 순환하며 중간 값으로 나누어 만들 수 있는 랜선의 갯수를 구합니다.
+                    for (int i = 0; i < k; i++)
+                        sum += list[i] / middle;
+
+                    // 우리가 만들 랜선의 갯수가 n개보다 많거나 같아도 최대 랜선의 길이는 아닐 수 있기에 반복문을 또 돌면서 검사합니다.
+                    if (sum >= n)
+                        start = middle + 1;
+                    else
+                        end = middle - 1;
+
+                    sum = 0;
+                }
+
+                return end;
+            }
+        }
+
         public void Q1697()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
