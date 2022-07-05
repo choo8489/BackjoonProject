@@ -1187,6 +1187,133 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1966()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int t = int.Parse(reader.ReadLine());
+
+            List<int> priority = new List<int>();
+            int count = 0;
+
+            for (int i = 0; i < t; i++)
+            {
+                string[] str = reader.ReadLine().Split();
+                int n = int.Parse(str[0]); // 문서의 개수
+                int m = int.Parse(str[1]); // Queue에서 몇 번째 놓여 있는지를 나타내는 정수
+
+                int[] status = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                Queue<(int, int)> queue = new Queue<(int, int)>();
+                count = 0;
+                priority.Clear();
+
+                for (int j = 0; j < n; j++)
+                {
+                    queue.Enqueue((status[j], j));
+                    priority.Add(status[j]);
+                }
+
+                priority.Sort();
+                priority.Reverse();
+
+                while (queue.Count > 0)
+                {
+                    // 위치값과, 우선순위 값을 가져온 뒤 pop수행
+                    int value = queue.Peek().Item1;
+                    int location = queue.Peek().Item2;
+
+                    queue.Dequeue();
+
+                    // 값 비교
+                    if (priority[0] == value)
+                    {
+                        priority.RemoveAt(0);
+                        ++count;
+                        if (m == location)
+                        {
+                            writer.WriteLine(count);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        queue.Enqueue((value, location));
+                    }
+                }
+            }
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1966_1()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int t = int.Parse(reader.ReadLine());
+
+            Queue<(int, int)> queue = new Queue<(int, int)>();
+            int max = 0;
+
+            for (int i = 0; i < t; i++)
+            {
+                int[] count = new int[10];
+
+                string[] str = reader.ReadLine().Split();
+                int n = int.Parse(str[0]); // 문서의 개수
+                int m = int.Parse(str[1]); // Queue에서 몇 번째 놓여 있는지를 나타내는 정수
+
+                int[] status = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+                int result = 0;
+                queue.Clear();
+
+                for (int j = 0; j < n; j++)
+                {
+                    queue.Enqueue((status[j], j)); // (중요도, 인덱스순서)
+                    count[status[j]]++; // 같은 숫자에 대해서 카운트
+                }
+
+                max = queue.Max(o => o.Item1); // 중요도의 최대값을 구합니다.
+
+                while (queue.Count > 0) // 큐가 1개 이상일 때까지 반복하며
+                {
+                    // 중요도의 최대값이 큐의 값과 같다면
+                    if (max == queue.Peek().Item1)
+                    {
+                        // 입력받은 m과 인덱스 순서를 비교하여 같으면 출력하고 반복문 탈출
+                        if (queue.Peek().Item2 == m)
+                        {
+                            writer.WriteLine($"{++result}");
+                            break;
+                        }
+
+                        // 인덱스 순서가 같지않으면 pop하고 최종
+                        // result 값 ++
+                        // 같은 숫자 갯수 --
+                        int a = queue.Dequeue().Item1;
+                        result++;
+                        count[a]--;
+
+                        // 중요도를 max 부터 -- 하면서 다음 서치해야될 중요도를 찾습니다.
+                        if (count[a] == 0)
+                        {
+                            while (count[max] == 0)
+                                --max;
+                        }
+                    }
+                    else
+                    {
+                        queue.Enqueue(queue.Dequeue());
+                    }
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1978()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());

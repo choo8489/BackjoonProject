@@ -132,16 +132,17 @@ namespace BackjoonProject
             StreamReader reader = new StreamReader(Console.OpenStandardInput());
 
             int n = int.Parse(reader.ReadLine());
+            // data라는 List 변수를 선언
             List<(int, string)> data = new List<(int, string)>();
 
             for (int i = 0; i < n; i++)
             {
                 string[] value = reader.ReadLine().Split();
-
+                // 튜플을 사용하여 나이와 이름을 저장하였습니다.
                 data.Add((int.Parse(value[0]), value[1]));
             }
 
-            // C# 문법 LINQ 로 정렬
+            // C# 문법 LINQ(OrderBy)로 정렬
             var sortList = data.OrderBy(x => x.Item1).ToList();
 
             for (int i = 0; i < n; i++)
