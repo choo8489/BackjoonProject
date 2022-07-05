@@ -995,6 +995,59 @@ namespace BackjoonProject
             Console.WriteLine((a / (c - b)) + 1);
         }
 
+        public void Q1874()
+        {
+            // 1874 스택 수열 문제 풀이
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            int[] sequence = new int[n];
+
+            for (int i = 0; i < n; i++)
+                sequence[i] = int.Parse(reader.ReadLine());
+
+            Stack<int> stack = new Stack<int>();
+            List<char> result = new List<char>();
+
+            int count = 0;
+            for (int i = 1; i < n + 1; i++)
+            {
+                stack.Push(i);
+                result.Add('+');
+
+                while (true)
+                {
+                    if (stack.Count == 0)
+                        break;
+
+                    // 스택의 pop 할 값과 임의의 수열 값을 확인하여 같으면 Pop 합니다.
+                    if (stack.Peek() == sequence[count])
+                    {
+                        stack.Pop();
+                        count++; // 임의의 수열값을 증가시켜줍니다.
+                        result.Add('-');
+                    }
+                    else
+                        break;
+                }
+            }
+
+            // 예제 입력 2에 대한 예외처리 
+            if (stack.Count != 0)
+            {
+                writer.WriteLine("NO");
+            }
+            else
+            {
+                for (int i = 0; i < result.Count; i++)
+                    writer.WriteLine(result[i]);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1920()
         {
             // 기본 List 서치방식
