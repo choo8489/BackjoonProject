@@ -658,6 +658,36 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q11651()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<(int, int)> list = new List<(int, int)>();
+            for (int i = 0; i < n; i++)
+            {
+                string[] str = reader.ReadLine().Split();
+                int x = int.Parse(str[0].ToString());
+                int y = int.Parse(str[1].ToString());
+                list.Add((x, y));
+            }
+
+            // x 좌표로 정렬하고, y좌표로 정렬
+            //var sortList = list.OrderBy(x => x.Item1).ThenBy(x => x.Item2).ToList();
+            var sortList = list.OrderBy(x => x.Item2).ThenBy(x => x.Item1).ToList();
+
+            //var sortList = (from data in list
+            //                orderby data.Item1, data.Item2
+            //                select data).ToList();
+
+            for (int i = 0; i < n; i++)
+                writer.WriteLine($"{sortList[i].Item1} {sortList[i].Item2}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q11653()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
