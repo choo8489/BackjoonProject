@@ -10,6 +10,59 @@ namespace BackjoonProject
 {
     class Question2000
     {
+        public void Q2108()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+            List<int> list = new List<int>();
+
+            // 입력되는 정수의 -4000 ~ 4000 까지의 수
+            int[] count = new int[8002];
+
+            for (int i = 0; i < n; i++)
+            {
+                int value = int.Parse(reader.ReadLine());
+                // 입력받은 값을 List의 넣습니다.
+                list.Add(value);
+                // 입력받은 값을 카운팅합니다.
+                count[value + 4000]++;
+            }
+
+            // 총 평균의 소수점이하 반올림
+            double avg = Math.Round(list.Average());
+            // 산술평균 : N개의 수들의 합을 N으로 나눈 값
+            writer.WriteLine((int)avg == -0 ? 0 : avg);
+
+            list.Sort();
+            // 중앙값 : N개의 수들을 증가하는 순서로 나열했을 경우 그 중앙에 위치하는 값
+            writer.WriteLine(list[(n - 1) / 2]);
+
+            int max = count.Max();
+            List<int> mode = new List<int>();
+            for (int i = 0; i < 8002; i++)
+            {
+                // 가장 많이 나타낸 값들을 mode에 넣습니다 ( 중복 까지 )
+                if (max == count[i])
+                    mode.Add(i - 4000);
+            }
+
+            // 가장 많이 나온값을 오름차순으로 정렬
+            mode.Sort();
+            // 최빈값 : N개의 수들 중 가장 많이 나타나는 값
+            if (mode.Count > 1)
+                writer.WriteLine(mode[1]);
+            else
+                writer.WriteLine(mode[0]);
+
+            // 범위 : N개의 수들 중 최댓값과 최솟값의 차이
+            writer.WriteLine(list[n - 1] - list[0]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2164()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
