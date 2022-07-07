@@ -813,6 +813,74 @@ namespace BackjoonProject
                 Console.WriteLine("0");
         }
 
+        public void Q2805()
+        {
+            // 2805
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int n = int.Parse(input[0]);  // 나무의 수
+            int m = int.Parse(input[1]);  // 상근이가 원하는 나무의 길이
+
+            int[] trees = Array.ConvertAll(reader.ReadLine().Split(), int.Parse); // 나무의 높이
+
+            long start = 0;
+            long end = trees.Max();
+            long middle = 0;
+            long sum = 0;
+
+            // middle과 sum을 담기위한 List
+            List<(long, long)> result = new List<(long, long)>();
+
+            while (true)
+            {
+                sum = 0;
+
+                // start가 end보다 커지는 순간 프로그램 종료
+                if (start > end)
+                    break;
+
+                // 이분탐색 중간 값
+                middle = (start + end) / 2;
+
+                for (int i = 0; i < n; i++)
+                {
+                    // 잘라낸 나무의 길이 계샨
+                    if (trees[i] > middle)
+                        sum += trees[i] - middle;
+                }
+
+                result.Add((middle, sum));
+
+                // 잘라낸 나무랑 원하는 나무의 길이가 같으면 종료
+                if (sum == m)
+                    break;
+
+                // 탐색 범위 재설정
+                if (sum >= m)
+                    start = middle + 1;
+                else
+                    end = middle - 1;
+            }
+
+            // 잘라낸 나무의 총길이로 오름차순정렬
+            result.Sort((a, b) => a.Item2.CompareTo(b.Item2));
+
+            foreach (var value in result)
+            {
+                // 잘라낸 나무의 최대값 
+                if (value.Item2 >= m)
+                {
+                    writer.WriteLine(value.Item1);
+                    break;
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2839()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());

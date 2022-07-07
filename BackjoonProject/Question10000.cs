@@ -918,6 +918,78 @@ namespace BackjoonProject
             Console.WriteLine($"{y - 543}");
         }
 
+        public void Q18111()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int n = int.Parse(input[0]);
+            int m = int.Parse(input[1]);
+            int b = int.Parse(input[2]);
+
+            int[,] block = new int[n, m];
+
+            int min = 256, max = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                int[] mValue = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                for (int j = 0; j < m; j++)
+                {
+                    block[i, j] = mValue[j]; // 블럭 할당
+                    if (min > mValue[j])
+                        min = mValue[j]; // 블럭의 높이 min 값
+                    if (max < mValue[j])
+                        max = mValue[j]; // 블럭의 높이 max 값
+                }
+            }
+
+            int remove, build, time;
+            int minTime = 256 * n * m * 2;
+            int maxHeight = 0;
+
+            for (int i = min; i <= max; i++)
+            {
+                remove = 0;
+                build = 0;
+
+                // min 부터 max 까지 빼야될 거랑 추가할 갯수를 구합니다.
+                for (int x = 0; x < n; x++)
+                {
+                    for (int y = 0; y < m; y++)
+                    {
+                        int height = block[x, y] - i;
+
+                        if (height > 0)
+                            remove += height;
+                        else if (height < 0)
+                            build -= height;
+                    }
+                }
+
+                // 더 해야될 갯수 <= 빼야될 갯수 + 가지고 있는 갯수만 평평해질 수 있다.
+                if (build <= remove + b)
+                {
+                    // 시간 계산 빼는거 * 2 + 더해야될 거
+                    time = remove * 2 + build;
+
+                    // 시간이 min보다 작다면 교체
+                    if (time <= minTime)
+                    {
+                        minTime = time;
+                        maxHeight = i;
+                    }
+                }
+            }
+
+            writer.WriteLine($"{minTime} {maxHeight}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q25083()
         {
             Console.WriteLine("         ,r'\"7");
