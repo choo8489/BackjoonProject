@@ -899,6 +899,41 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q17219()
+        {
+            StringBuilder builder = new StringBuilder();
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int n = int.Parse(input[0]); // 저장된 사이트의 주소
+            int m = int.Parse(input[1]); // 비밀번호를 찾으려는 사이트 주소의 수
+
+            // 리스트로 했을 때 82%에서 통과하지 못했습니다. ( 시간초과로 )
+            //List<(string, string)> map = new List<(string, string)>();
+            Dictionary<string, string> map = new Dictionary<string, string>();
+
+            for (int i = 0; i < n; i++)
+            {
+                input = reader.ReadLine().Split();
+                map.Add(input[0], input[1]);
+            }
+
+            string email;
+            for (int j = 0; j < m; j++)
+            {
+                email = reader.ReadLine();
+                // 리스트로 찾을 때
+                //builder.Append($"{(map.Find(o => o.Item1 == email)).Item2}\n");
+                builder.Append($"{map[email]}\n");
+            }
+
+            writer.WriteLine(builder);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q17478()
         {
             // 문제를 틀렸습니다. ( 나중에 문제 해결 할예정 )
