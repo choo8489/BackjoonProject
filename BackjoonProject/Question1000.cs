@@ -558,6 +558,52 @@ namespace BackjoonProject
 
             Console.WriteLine(count);
         }
+
+        public void Q1100()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            List<(int, int)> whiteMap = new List<(int, int)>();
+            int start;
+            for (int i = 0; i < 8; i++)
+            {
+                // 시작점을 정해줍니다.
+                start = (i == 0 || i % 2 == 0) ? 0 : 1;
+
+                // 흰색 체스판들을 찾습니다.
+                for (int j = start; j < 8; j += 2)
+                    whiteMap.Add((i, j));
+            }
+
+            int[,] inputMap = new int[8, 8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                string str = reader.ReadLine();
+                for (int j = 0; j < 8; j++)
+                {
+                    // 입력받은 값이 'F'면 1을 아니면 0을 입력받습니다.
+                    if (str[j] == 'F')
+                        inputMap[i, j] = 1;
+                    else
+                        inputMap[i, j] = 0;
+                }
+            }
+
+            int count = 0;
+            for (int i = 0; i < whiteMap.Count; i++)
+            {
+                // 흰색체스판 위에 값이 1이면 카운트 증가
+                if (inputMap[whiteMap[i].Item1, whiteMap[i].Item2] == 1)
+                    count++;
+            }
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+        }
         public void Q1110()
         {
             string n = Console.ReadLine();
