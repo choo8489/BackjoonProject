@@ -604,6 +604,7 @@ namespace BackjoonProject
             writer.Close();
             reader.Close();
         }
+
         public void Q1110()
         {
             string n = Console.ReadLine();
@@ -631,6 +632,41 @@ namespace BackjoonProject
 
             Console.WriteLine(count);
         }
+
+        public void Q1145()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            long result = input.Min();
+            int count = 0;
+
+            // 값이 작기 때문에 완전탐색
+            while (true)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    // 나누어 떨어진 값이 0이라면 count 증가
+                    if (result % input[i] == 0)
+                        count++;
+                }
+
+                // 적어도 세 개로 나누어 지는 가장 작은 자연수면 반복문 탈출
+                if (count >= 3)
+                    break;
+
+                count = 0;
+                result++;
+            }
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1152()
         {
             string[] str = Console.ReadLine().Split();
@@ -677,6 +713,41 @@ namespace BackjoonProject
 
             reader.Close();
             writer.Close();
+        }
+
+        public void Q1159()
+        {
+            StringBuilder builder = new StringBuilder();
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int n = int.Parse(reader.ReadLine());
+
+            // 알파벳 갯수를 담을 배열 정의
+            int[] english = new int[26];
+
+            for (int i = 0; i < n; i++)
+            {
+                // 첫번째 글자에 'a' 값을 빼어 호출되는 수만큼 더해서 저장
+                string name = reader.ReadLine();
+                english[name[0] - 'a']++;
+            }
+
+            for (int i = 0; i < english.Length; i++)
+            {
+                // 5번 이상 호출되면 기록
+                if (english[i] >= 5)
+                    builder.Append((char)(i + 'a'));
+            }
+
+            // 기록된게 하나도 없다면 기권 아니면 성 첫글자 출력
+            if (builder.Length == 0)
+                writer.WriteLine("PREDAJA");
+            else
+                writer.WriteLine(builder);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1181()

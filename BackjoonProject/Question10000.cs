@@ -11,6 +11,25 @@ namespace BackjoonProject
 {
     class Question10000
     {
+        public void Q10039()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int sum = 0;
+
+            for (int i = 0; i < 5; i++)
+            {
+                int point = int.Parse(reader.ReadLine());
+                sum += (point >= 40) ? point : 40;
+            }
+
+            writer.WriteLine(sum / 5);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10172()
         {
             Console.WriteLine("|\\_/|");

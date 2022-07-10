@@ -343,6 +343,19 @@ namespace BackjoonProject
 
             Console.WriteLine($"{h} {m}");
         }
+        public void Q2558()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int a = int.Parse(reader.ReadLine());
+            int b = int.Parse(reader.ReadLine());
+
+            writer.WriteLine(a + b);
+
+            writer.Close();
+            reader.Close();
+        }
 
         public void Q2562()
         {
