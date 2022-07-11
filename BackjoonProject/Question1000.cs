@@ -796,6 +796,69 @@ namespace BackjoonProject
                 Write($"{i}/{line - i + 1}");
         }
 
+        public void Q1225()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            string a = input[0];
+            string b = input[1];
+
+            long sum = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                // a와 b를 한자리씩 순환하면 sum에 다 더해주고 있습니다.
+                for (int j = 0; j < b.Length; j++)
+                    sum += int.Parse(a[i].ToString()) * int.Parse(b[j].ToString());
+            }
+
+            writer.WriteLine(sum);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1233()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int s1 = int.Parse(input[0]);
+            int s2 = int.Parse(input[1]);
+            int s3 = int.Parse(input[2]);
+
+            int[] count = new int[s1 + s2 + s3 + 1];
+
+            for (int i = 1; i <= s1; i++)
+            {
+                for (int j = 1; j <= s2; j++)
+                {
+                    for (int z = 1; z <= s3; z++)
+                        count[i + j + z]++; // 주사위의 모든 눈의 합을 카운팅
+                }
+            }
+
+            int max = 0, result = 0;
+            for (int i = 1; i < count.Length; i++)
+            {
+                // 가장 높은 빈도수를 구함 (단, 여러개라면 합이 가장 작은거)
+                // 오름차순이라 처음으로 구해진 max값이 제일 작습니다.
+                if (max < count[i])
+                {
+                    max = count[i];
+                    result = i;
+                }
+
+            }
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1259()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
@@ -906,6 +969,46 @@ namespace BackjoonProject
 
             for (int i = 0; i < result.Count; i++)
                 writer.Write(result[i] + " ");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1284()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int length;
+            while (true)
+            {
+                // 호수판의 경계와 숫자 사이에는 1cm * 2
+                length = 2;
+
+                string input = reader.ReadLine();
+
+                // 입력이 0이면 프로그램 종료
+                if (input == "0")
+                    break;
+
+                for (int i = 0; i < input.Length; i++)
+                {
+                    int num = int.Parse(input[i].ToString());
+
+                    // 1은 2cm / 0은 4cm / 나머지는 3cm
+                    if (num == 1)
+                        length += 2;
+                    else if (num == 0)
+                        length += 4;
+                    else
+                        length += 3;
+                }
+
+                // 각 숫자 사이에는 1cm 여백 ( 총 갯수 - 1 만큼 )
+                length += input.Length - 1;
+
+                writer.WriteLine(length);
+            }
 
             writer.Close();
             reader.Close();
