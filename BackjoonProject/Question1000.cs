@@ -1014,6 +1014,26 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1297()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int D = int.Parse(input[0]); // 대각선의 길이
+            int H = int.Parse(input[1]); // 높의 비율 
+            int W = int.Parse(input[2]); // 너비 비율
+
+            double c = MathF.Sqrt(H * H + W * W);
+            double a = H * D / c;
+            double b = W * D / c;
+
+            writer.WriteLine($"{(int)a} {(int)b}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1316()
         {
             int n = int.Parse(Console.ReadLine());
