@@ -145,6 +145,36 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2204()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            List<string> input = new List<string>();
+            while (true)
+            {
+                int n = int.Parse(reader.ReadLine()); // 단어의 개수
+
+                // 마지막 입력 확인
+                if (n == 0)
+                    break;
+
+                for (int i = 0; i < n; i++)
+                    input.Add(reader.ReadLine());
+
+                // 입력받은 값을 비교할 때 대문자로 비교해주고 정렬해줍니다.
+                input.Sort((x, y) => x.ToUpper().CompareTo(y.ToUpper()));
+
+                writer.WriteLine(input[0]);
+
+                // 전부 비교 후 List 클리어
+                input.Clear();
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2231()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
