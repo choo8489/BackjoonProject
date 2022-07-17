@@ -334,6 +334,39 @@ namespace BackjoonProject
             }
         }
 
+        public void Q1015()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            string[] input = reader.ReadLine().Split();
+
+            int[] a = new int[N]; // 입력받은 A의 원소
+            (int, int)[] p = new (int, int)[N]; // 인덱스와 A의 원소를 저장하기 위한 튜플 배열
+
+            for (int i = 0; i < N; i++)
+            {
+                // 데이터 파싱
+                a[i] = int.Parse(input[i]);
+                p[i] = (i, a[i]);
+            }
+
+            var sortList = p.OrderBy(o => o.Item2).ToArray(); // A의 원소로 오름차순 정렬
+            int[] result = new int[N + 1];
+
+            for (int i = 0; i < N; i++)
+                result[sortList[i].Item1] = i; // 오름차순한 배열의 index로 비내림차순 수열 정렬
+
+            for (int i = 0; i < N; i++)
+                writer.Write($"{result[i]} ");
+
+            writer.WriteLine();
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1018()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
