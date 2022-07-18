@@ -648,6 +648,33 @@ namespace BackjoonProject
             }
         }
 
+        public void Q11399()
+        {
+            // 11399 그리디 알고리즘 / 정렬
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            // 합의 최솟값이라 하면 제일 돈을 인출하는데 걸리는 시간이 적은 사람부터 진행해야 
+            // 시간의 합이 최솟값입니다.
+            int N = int.Parse(reader.ReadLine()); // 사람의 수
+            int[] P = Array.ConvertAll(reader.ReadLine().Split(), int.Parse); // 돈을 인출하는데 걸리는 시간 Pi
+            int[] accrueP = new int[N]; // 누적 시간 
+
+            Array.Sort(P); // 내림차순 정렬
+
+            int sum = 0;
+            for (int i = 0; i < N; i++)
+            {
+                sum += P[i];
+                accrueP[i] = sum; // 돈을 인출 할 때 걸리는 시간을 누적하여 저장
+            }
+
+            writer.WriteLine(accrueP.Sum()); // 합의 최솟값
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q11650()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());

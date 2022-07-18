@@ -1103,6 +1103,45 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1292()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int A = int.Parse(input[0]);
+            int B = int.Parse(input[1]);
+
+            int count = 0; // 1을 한번, 2를 두번 등 몇번 입력받았는지 갯수 체크를 위한 변수
+            List<int> list = new List<int>(); // 수열을 저장하기 위한 LIST
+
+            int num = 1;
+            while (true)
+            {
+                list.Add(num); // 수열을 추가합니다.
+                count++;
+
+                if (num == count) // num이랑 count가 같으면 갯수를 1로 초기화 
+                {
+                    num++;
+                    count = 0;
+                }
+
+                if (list.Count + 1 > B) // 입력받은 B번째 숫자까지 추가하게되면 반복문 종료
+                    break;
+            }
+
+            int sum = 0;
+            // A번째 부터 B번째 까지의 합을 구합니다. ( A-1 => 리스트의 인덱스는 0부터 시작하기 때문에 )
+            for (int i = A - 1; i < B; i++)
+                sum += list[i];
+
+            writer.WriteLine(sum);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1297()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
@@ -1163,6 +1202,28 @@ namespace BackjoonProject
                 Console.WriteLine(">");
             else
                 Console.WriteLine("<");
+        }
+
+        public void Q1427()
+        {
+            // 1427 문자열 정렬
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string input = reader.ReadLine();
+            int[] range = new int[input.Length];
+
+            int length = range.Length;
+            for (int i = 0; i < length; i++)
+                range[i] = int.Parse(input[i].ToString()); // 한자리씩 입력받아서 배열에 저장
+
+            Array.Sort(range); // 내림차순으로 정렬
+
+            for (int i = length - 1; i >= 0; i--) // 뒤에서부터 앞으로 출력
+                writer.Write(range[i]);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1436()
