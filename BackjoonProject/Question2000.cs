@@ -1010,6 +1010,35 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2864()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            (string, string) a = (string.Empty, string.Empty); // min max
+            (string, string) b = (string.Empty, string.Empty); // min max
+
+            for (int i = 0; i < input[0].Length; i++)
+            {
+                a.Item1 += (input[0][i] == '6') ? '5' : input[0][i]; // 6은 5로 변경
+                a.Item2 += (input[0][i] == '5') ? '6' : input[0][i]; // 5는 6으로 변경
+            }
+
+            for (int i = 0; i < input[1].Length; i++)
+            {
+                b.Item1 += (input[1][i] == '6') ? '5' : input[1][i];  // 6은 5로 변경
+                b.Item2 += (input[1][i] == '5') ? '6' : input[1][i];  // 5는 6으로 변경
+            }
+
+            // min + min  max + max
+            writer.WriteLine($"{int.Parse(a.Item1) + int.Parse(b.Item1)} {int.Parse(a.Item2) + int.Parse(b.Item2)}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2869()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
