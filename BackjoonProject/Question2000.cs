@@ -657,6 +657,53 @@ namespace BackjoonProject
             }
         }
 
+        public enum CentType
+        {
+            Quarter = 0,
+            Dime = 1,
+            Nickel = 2,
+            Penny = 3,
+
+            Max = 4
+        }
+
+        public void Q2720()
+        {
+            // 2720 수학 그리디 알고리즘 사칙연산
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+            int[] money = new int[(int)CentType.Max] { 25, 10, 5, 1 };
+            int[] count = new int[(int)CentType.Max];
+
+            for (int i = 0; i < T; i++)
+            {
+                int USD = int.Parse(reader.ReadLine());
+
+                // 쿼터 개수 반환 + 나머지 반환
+                count[(int)CentType.Quarter] = USD / money[(int)CentType.Quarter];
+                USD %= money[(int)CentType.Quarter];
+
+                // 다임 개수 반환 + 나머지 반환
+                count[(int)CentType.Dime] = USD / money[(int)CentType.Dime];
+                USD %= money[(int)CentType.Dime];
+
+                // 페니 개수 반환 + 나머지 반환
+                count[(int)CentType.Nickel] = USD / money[(int)CentType.Nickel];
+                USD %= money[(int)CentType.Nickel];
+
+                // 나머지 == 페니
+                count[(int)CentType.Penny] = USD;
+
+                writer.WriteLine($"{count[(int)CentType.Quarter]} {count[(int)CentType.Dime]} " +
+                    $"{count[(int)CentType.Nickel]} {count[(int)CentType.Penny]}");
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2739()
         {
             int data = int.Parse(Console.ReadLine());
