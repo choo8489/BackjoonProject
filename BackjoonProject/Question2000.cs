@@ -971,6 +971,35 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2810()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            string seat = reader.ReadLine();
+
+            int count = N + 1; // N개의 연속된 좌석에 양옆 컵홀더가 있으므로 +1 해줍니다. (총 컵홀더 개수)
+            int LCount = 0;
+
+            int length = seat.Length;
+            for (int i = 0; i < length; i++)
+            {
+                if (seat[i] == 'L') // 커플석 검사
+                    LCount++;
+            }
+
+            if (LCount == 0)
+                count = N; // 커플석이 하나도 없다면 N개로 초기화
+            else
+                count -= (LCount / 2); // 커플석 개수만큼 -1
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2839()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
