@@ -1255,6 +1255,40 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1439()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string S = reader.ReadLine();
+            int zeroCount = 0; // 0이 연속되는 숫자
+            int oneCount = 0; // 1이 연속되는 숫자
+
+            // 첫번째 숫자 카운팅
+            if (S[0] == '0')
+                zeroCount++;
+            else
+                oneCount++;
+
+            for (int i = 1; i < S.Length; i++)
+            {
+                // 현재 숫자랑 전숫자랑 비교해서 값이 달라지면 연속이 끊킨거라고 판단하여 개수 증가
+                if (S[i] != S[i - 1])
+                {
+                    if (S[i] == '0')
+                        zeroCount++;
+                    else
+                        oneCount++;
+                }
+            }
+
+            // 두 숫자 카운팅 중 작은숫자가 최소 횟수로 보고 출력
+            writer.WriteLine(MathF.Min(zeroCount, oneCount));
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1546()
         {
             int n = int.Parse(Console.ReadLine());
