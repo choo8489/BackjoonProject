@@ -1204,6 +1204,98 @@ namespace BackjoonProject
                 Console.WriteLine("<");
         }
 
+        public void Q1343()
+        {
+            StringBuilder sb = new StringBuilder();
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string input = reader.ReadLine();
+            int count = 0;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == 'X') // X가 나올 때마다 카운팅
+                {
+                    count++;
+                }
+                else
+                {
+                    if (count % 2 == 1) // '.'이 나왔을 때 카운팅된 개수가 홀수이면 -1 출력 
+                    {
+                        sb = new StringBuilder();
+                        sb.Append(-1);
+                        break;
+                    }
+
+                    Counting(); // 입력받은 X의 개수만큼 AAAA와 BB 출력
+
+                    sb.Append(".");
+                }
+            }
+
+            if (count > 0) // .이 한번도 나오지 않은경우 예외처리 실행
+            {
+                if (count % 2 == 1)
+                {
+                    sb = new StringBuilder();
+                    sb.Append(-1);
+                }
+                else
+                    Counting();
+            }
+
+            writer.WriteLine(sb);
+            writer.Close();
+            reader.Close();
+
+            void Counting()
+            {
+                while (count != 0)
+                {
+                    if (count >= 4)
+                    {
+                        sb.Append("AAAA");
+                        count -= 4;
+                    }
+                    else
+                    {
+                        sb.Append("BB");
+                        count -= 2;
+                    }
+                }
+            }
+        }
+
+        public void Q1343_1()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string input = reader.ReadLine();
+
+            input = input.Replace("XXXX", "AAAA").Replace("XX", "BB"); // 모든 XXXX와 XX를 바꿔줍니다.
+
+            bool isSuccess = true;
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == 'X') // 하나라도 X가 있으면 실패
+                {
+                    isSuccess = false;
+                    break;
+                }
+            }
+
+            if (isSuccess)
+                writer.WriteLine(input);
+            else
+                writer.WriteLine(-1);
+
+            writer.Close();
+            reader.Close();
+        }
+
+
         public void Q1427()
         {
             // 1427 문자열 정렬
