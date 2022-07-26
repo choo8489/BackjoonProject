@@ -1733,6 +1733,48 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1931()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            (int start, int end)[] time = new (int, int)[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                string[] input = reader.ReadLine().Split();
+                time[i] = (int.Parse(input[0]), int.Parse(input[1]));
+            }
+
+            Array.Sort(time, (x, y) => Compare(x, y)); // end를 기준으로 오름차순
+
+            int count = 0; // 회의 가능 한 수
+            int endTime = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                if (endTime <= time[i].start) // 회의 종료 시점이 다음 회의 시작지점보다 적다면
+                {
+                    endTime = time[i].end;
+                    count++;
+                }
+            }
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+
+            int Compare((int start, int end) x, (int start, int end) y)
+            {
+                if (x.end == y.end) // 끝나는 순서가 같다면
+                    return (x.start < y.start) ? -1 : 1; // 시작하는 순서가 빠른 순으로
+                else
+                    return (x.end < y.end) ? -1 : 1; // 끝나는 순서가 빠른 순으로
+            }
+        }
+
         public void Q1966()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());

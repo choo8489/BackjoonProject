@@ -175,6 +175,38 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2217()
+        {
+            static void Main(string[] args)
+            {
+                StreamWriter writer = new StreamWriter(OpenStandardOutput());
+                StreamReader reader = new StreamReader(OpenStandardInput());
+
+                int N = int.Parse(reader.ReadLine());
+                int[] w = new int[N];
+
+                for (int i = 0; i < N; i++)
+                    w[i] = int.Parse(reader.ReadLine());
+
+                Array.Sort(w); // 오름 차순 정렬
+
+                int maxWeight = 0; // 물체의 최대 중량을 저장하는 변수
+                int count = 1; // 몇번째 로프 인지 확인하는 변수
+                for (int i = N - 1; i >= 0; i--)
+                {
+                    int sum = w[i] * count++; // 현재 선택된 로프 * 총 로프 개수
+
+                    if (sum > maxWeight) // 전 최대 중량이 현재 sum 보다 작으면 max 교체
+                        maxWeight = sum;
+                }
+
+                writer.WriteLine(maxWeight);
+
+                writer.Close();
+                reader.Close();
+            }
+        }
+
         public void Q2231()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
