@@ -881,6 +881,42 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q14659()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int[] height = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int count = 0; // 현재 봉우리의 킬수
+            int max = height[0]; // 처음 첫번째 봉우리의 높이 값을 초기화
+            int kill = 0; // 최대 킬수 저장
+
+            for (int i = 1; i < N; i++)
+            {
+                if (count > kill) // 현재 봉우리의 킬수가 최대 킬수보다 크다면 그 값을 저장
+                    kill = count;
+
+                if (height[i] > max) // 현재 봉우리의 값이 max보다 크다면 킬 카운팅을 초기화
+                {
+                    max = height[i];
+                    count = 0;
+                }
+                else
+                {
+                    count++; // 킬 카운터 추가
+                }
+            }
+
+            if (count > kill) // 마지막 값이 count++ 하고 넘어가는 경우가 있어 한번더 검사
+                kill = count;
+
+            writer.WriteLine(kill);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q14681()
         {
             int x = int.Parse(Console.ReadLine());
@@ -940,6 +976,37 @@ namespace BackjoonProject
 
 
             writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q15904()
+        {
+            // 15904 UCPC는 무엇의 약자일까?
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            char[] input = reader.ReadLine().ToCharArray();
+            int count = 0;
+
+            string str = "UCPC";
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == str[count]) // count를 하나씩 올려주며 UCPC가 있는지 확인
+                {
+                    count++;
+
+                    if (count == 4) // UCPC가 다 있으면 종료
+                        break;
+                }
+            }
+
+            if (count == 4)
+                writer.WriteLine("I love UCPC");
+            else
+                writer.WriteLine("I hate UCPC");
 
             writer.Close();
             reader.Close();

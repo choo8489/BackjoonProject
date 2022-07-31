@@ -1071,6 +1071,37 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2847()
+        {
+            // 2847 게임을 만든 동준이
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine()); // 총 N개의 레벨
+            int[] point = new int[N];
+            int count = 0;
+
+            for (int i = 0; i < N; i++)
+                point[i] = int.Parse(reader.ReadLine());
+
+            // 레벨이 가장 높은 점수는 변하지 않는다. 
+            for (int i = N - 1; i > 0; i--)
+            {
+                if (point[i] <= point[i - 1]) // 레벨이 낮는데 점수가 크다면
+                {
+                    int value = (point[i - 1] - point[i]) + 1; // 현재 점수보다 1 낮게 계산
+                    count += value; // 1점에 1카운팅 하도록 적용
+
+                    point[i - 1] -= value; // 현재 점수보다 1낮게 반영
+                }
+            }
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2864()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
