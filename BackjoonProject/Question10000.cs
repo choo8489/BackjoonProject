@@ -932,6 +932,34 @@ namespace BackjoonProject
                 Console.WriteLine(4);
         }
 
+        public void Q14720()
+        {
+            // 14720 우유축제
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            string[] input2 = reader.ReadLine().Split();
+            int count = 0;
+            int nowMilk = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                int milk = int.Parse(input2[i]); // 현재 우유 가게 정보 가지고오기
+
+                if (milk == nowMilk) // 현재 먹어야하는 우유 확인
+                {
+                    count++; // 먹은 우유 개수 카운팅
+                    nowMilk = (nowMilk == 2) ? 0 : ++nowMilk; // 우유 순환, 마지막 바나나우유를 먹었으면 딸기 우유로 변경
+                }
+            }
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q15552()
         {
             int n = int.Parse(Console.ReadLine());
@@ -1007,6 +1035,38 @@ namespace BackjoonProject
                 writer.WriteLine("I love UCPC");
             else
                 writer.WriteLine("I hate UCPC");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q16435()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            string[] input2 = reader.ReadLine().Split();
+
+            int N = int.Parse(input[0]);
+            int L = int.Parse(input[1]);
+            int[] H = new int[N];
+
+            for (int i = 0; i < N; i++)
+                H[i] = int.Parse(input2[i]);
+
+            // 자신의 길이보다 작거나 같은 높이 부터 먹기위에 오름차순으로 정렬
+            Array.Sort(H);
+
+            for (int i = 0; i < N; i++)
+            {
+                if (L >= H[i]) // 먹을 수 있는지 확인
+                    L++;
+                else // 못먹으면 반복문 종료
+                    break;
+            }
+
+            writer.WriteLine(L);
 
             writer.Close();
             reader.Close();

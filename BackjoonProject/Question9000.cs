@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using static BackjoonProject.Tools;
+using static System.Console;
 
 namespace BackjoonProject
 {
@@ -84,14 +86,26 @@ namespace BackjoonProject
             reader.Close();
         }
 
-        private Stream OpenStandardInput()
+        public void Q9237()
         {
-            throw new NotImplementedException();
-        }
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
 
-        private Stream OpenStandardOutput()
-        {
-            throw new NotImplementedException();
+            int N = int.Parse(reader.ReadLine());
+            int[] tree = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int[] day = new int[N];
+
+            // 내림 차순 정렬
+            Array.Sort(tree);
+            Array.Reverse(tree);
+
+            for (int i = 0; i < N; i++)
+                day[i] = i + 1 + tree[i]; // 나무가 자라는데 걸리는 시간
+
+            writer.WriteLine(day.Max() + 1); // 최고로 오래걸리는 나무시간 + 첫날 심는 시간
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q9498()

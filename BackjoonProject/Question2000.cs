@@ -1032,6 +1032,46 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2828()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+
+            int J = int.Parse(reader.ReadLine());
+
+            int count = 0;
+
+            int left = 1; // 바구니의 왼쪽 끝 값
+            int right = 1 + (M - 1); // 바구니의 오른쪽 끝 값
+
+            for (int i = 0; i < J; i++)
+            {
+                int apple = int.Parse(reader.ReadLine());
+
+                if (apple > right) // 사과가 오른쪽 끝 값보다 크다면
+                {
+                    count += apple - right; // 오른쪽 끝 값에서 사과까지 이동해야되는 거리 카운팅
+                    right = apple;  // 오른쪽 끝값을 사과가 떨어지는 번호로 이동
+                    left = apple - (M - 1); // 왼쪽 끝값은 그만큼 이동
+                }
+                else if (apple < left) // 사과가 왼쪽 끝값보다 작다면
+                {
+                    count += left - apple; // 왼쪽 끝 값에서 사과까지 이동해야되는 거리 카운팅
+                    left = apple; // 왼쪽 끝값을 사과가 떨어지는 번호로 이동
+                    right = apple + (M - 1); // 오른쪽 끝값은 그만큼 이동
+                }
+            }
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2839()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
