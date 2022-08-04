@@ -246,5 +246,15 @@ namespace BackjoonProject
                     DFS(list[r][i]);
             }
         }
+
+        public void Q25083()
+        {
+            Console.WriteLine("         ,r'\"7");
+            Console.WriteLine("r`-_   ,\'  ,/");
+            Console.WriteLine(" \\. \". L_r\'");
+            Console.WriteLine("   `~\\/");
+            Console.WriteLine("      |");
+            Console.WriteLine("      |");
+        }
     }
 }

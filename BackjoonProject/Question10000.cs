@@ -675,6 +675,36 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q11508()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int[] dairy = new int[N];
+
+            for (int i = 0; i < N; i++)
+                dairy[i] = int.Parse(reader.ReadLine());
+
+            // 내림차순으로 정렬
+            Array.Sort(dairy);
+            Array.Reverse(dairy);
+
+            int cost = 0;
+            for (int i = 0; i < N; i++)
+            {
+                if (i % 3 == 2) // 세번째 값은 cost에 더하지 않고 패스
+                    continue;
+
+                cost += dairy[i];
+            }
+
+            writer.WriteLine(cost);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q11650()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
@@ -1224,6 +1254,30 @@ namespace BackjoonProject
             }
 
             writer.WriteLine($"{minTime} {maxHeight}");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q19939()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int K = int.Parse(input[1]);
+
+            // 등차수열의 합
+            // 1부터 K까지의 총합
+            int sum = K * (K + 1) / 2;
+
+            if (N < sum) // 필요한 박의 개수가 N보다 크다면 -1 출력
+                writer.WriteLine(-1);
+            else if ((N - sum) % K == 0) // 동일한 개수로 분배를 할 수 있다면 제일 큰수와 제일 작은수의 차이는 K-1이 됩니다.
+                writer.WriteLine(K - 1);
+            else
+                writer.WriteLine(K); // 그게 아니라면 제일 큰수와 작은수는 K개 만큼 차이납니다.
 
             writer.Close();
             reader.Close();
