@@ -90,6 +90,37 @@ namespace BackjoonProject
             writer.Close();
         }
 
+        public void Q4796()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int index = 0;
+
+            while (true)
+            {
+                int sum = 0;
+                string[] input = reader.ReadLine().Split();
+
+                int L = int.Parse(input[0]); // P 기간 중 사용할 수 있는 기간
+                int P = int.Parse(input[1]); // 캠핑장을 연속하는 기간
+                int V = int.Parse(input[2]); // 휴가 기간
+
+                if (L == 0 && P == 0 && V == 0)
+                    break;
+
+                sum = (V / P) * L; // V일 자리 휴가에 연속하는 기간 P로 나눈 몫에 L을 곱하면 반드시 써야하는 휴가 기간입니다.
+                V %= P; // V일에 휴가기간에서 연속하는 기간을 나눈 나머지는 사용하지 못한 휴가 입니다.
+                sum += V < L ? V : L; // 남은 휴가가 L 보다 작다면 그대로 사용하면 되고 크다면 L만큼 밖에 사용하지 못합니다.
+                index++;
+
+                writer.WriteLine($"Case {index}: {sum}");
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q4948()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
