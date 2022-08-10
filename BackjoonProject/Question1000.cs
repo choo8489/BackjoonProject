@@ -1295,6 +1295,58 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1417()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int Dasom = int.Parse(reader.ReadLine());
+            int count = 0;
+
+            if (N == 1) // 후보가 한명이라면 0 출력
+            {
+                writer.WriteLine(0);
+            }
+            else
+            {
+                int[] person = new int[N - 1];
+
+                // 다솜이를 제외한 나머지 당선인 입력
+                for (int i = 0; i < N - 1; i++)
+                    person[i] = int.Parse(reader.ReadLine());
+
+                // 오름차순 정렬
+                Array.Sort(person);
+
+                // 다솜이를 제외한 투표수가 제일 많은 사람과 비교하여 다솜이보다 적으면 0 출력
+                if (Dasom > person[N - 2])
+                {
+                    writer.WriteLine(0);
+                }
+                else
+                {
+                    while (Dasom <= person[N - 2])
+                    {
+                        person[N - 2]--; // 제일 투표수가 많은 당선인의 표를 뺃고
+                        Dasom++; // 다솜이에게 투표수 추가
+                        count++; // 매수해야되는 사람의 수 증가
+
+                        Array.Sort(person); // 제일 투표수가 많은 당선인을 찾기위해 Sort
+
+                        // 다솜이를 제외한 투표수가 제일 많은 사람과 비교하여 다솜이보다 적으면 반복문 종료
+                        if (Dasom > person[N - 2])
+                            break;
+                    }
+
+                    writer.WriteLine(count);
+                }
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
 
         public void Q1427()
         {
