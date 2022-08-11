@@ -910,6 +910,115 @@ namespace BackjoonProject
             writer.Close();
             reader.Close();
         }
+        
+        public void Q13413()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+
+            for (int i = 0; i < T; i++)
+            {
+                int N = int.Parse(reader.ReadLine());
+                char[] input = reader.ReadLine().ToCharArray();
+                char[] goal = reader.ReadLine().ToCharArray();
+
+                int countW = 0;
+                int countB = 0;
+
+                for (int j = 0; j < N; j++)
+                {
+                    if (input[j] != goal[j]) // 입력받은 데이터와 목표로 하는 데이터가 같지 않을 경우
+                    {
+                        if (goal[j] == 'W') // 목표로 하는 값이 W 라면
+                            countW++; // W 카운터 증가
+                        else
+                            countB++; // B 카운터 증가
+                    }
+                }
+
+                // W카운터와 B 카운터 중 큰 카운터수를 출력
+                writer.WriteLine((countW > countB) ? countW : countB);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q13413_1()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+
+            for (int i = 0; i < T; i++)
+            {
+                int N = int.Parse(reader.ReadLine());
+                char[] input = reader.ReadLine().ToCharArray();
+                char[] goal = reader.ReadLine().ToCharArray();
+
+                int countW = 0;
+                int countB = 0;
+
+                for (int j = 0; j < N; j++)
+                {
+                    if (input[j] != goal[j]) // 입력받은 데이터와 목표로 하는 데이터가 같지 않을 경우
+                    {
+                        if (input[j] == 'W') // 목표로 하는 값이 W 라면
+                            countW++; // W 카운터 증가
+                        else
+                            countB++; // B 카운터 증가
+                    }
+                }
+
+                int count = 0;
+                while (countW > 0 && countB > 0)
+                {
+                    countW--;
+                    countB--;
+                    count++;
+                }
+
+                // W카운터와 B 카운터 중 큰 카운터수를 출력
+                writer.WriteLine(countW + countB + count);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q14469()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            List<(int, int)> cows = new List<(int, int)>();
+
+            for (int i = 0; i < N; i++)
+            {
+                string[] input = reader.ReadLine().Split();
+                cows.Add((int.Parse(input[0]), int.Parse(input[1]))); // 도착시간과 검문시간 입력
+            }
+
+            cows = cows.OrderBy(time => time.Item1).ToList(); // 도착시간을 가지고 오름차순 정렬
+            int minTime = cows[0].Item1 + cows[0].Item2; // 처음값은 대기시간이 없으므로 바로 입력
+
+            for (int i = 1; i < N; i++)
+            {
+                if (minTime <= cows[i].Item1) // 기다리는 시간이 없으면 도착시간 + 검문시간
+                    minTime = cows[i].Item1 + cows[i].Item2;
+                else // 기다리는 시간이 있기 때문에 기다린시간 + 검문시간
+                    minTime += cows[i].Item2;
+            }
+
+            writer.WriteLine(minTime);
+
+            writer.Close();
+            reader.Close();
+        }
 
         public void Q14659()
         {
