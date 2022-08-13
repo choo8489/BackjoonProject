@@ -11,6 +11,63 @@ namespace BackjoonProject
 {
     class Question9000
     {
+        public void Q9009()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+            List<int> f = new List<int>();
+            // 피보나치 정의를 사용하기 위해 0과 1은 미리 입력
+            f.Add(0);
+            f.Add(1);
+
+            int index = 2;
+            while (true)
+            {
+                int value = f[index - 1] + f[index - 2]; // 피보나치 계산
+                if (value > 1000000000) // 조건에 따라 해당 하는 값보다 크다면 무의미
+                    break;
+
+                f.Add(f[index - 1] + f[index - 2]); // 계산한 값을 f리스트에 저장
+                index++;
+            }
+
+            List<int> result = new List<int>();
+            int count = f.Count;
+            for (int i = 0; i < T; i++)
+            {
+                int input = int.Parse(reader.ReadLine());
+                int listIndex = count - 1; // 피보나치 제일 큰 수부터 index 설정
+
+                while (input > 0) // 입력 받은 값보다 작아지면 반복문 탈출
+                {
+                    for (int j = listIndex; j > -1; j--) // 피보나치의 제일 큰 수부터 시작
+                    {
+                        // 입력 받은 값에 피보나치 값을 빼서 나온 값이 0보다 크다면 더할 수 있다.
+                        // 0보다 작다면 더할 수 없는 값
+                        if (input - f[j] >= 0)
+                        {
+                            result.Add(f[j]);
+                            input -= f[j];
+                        }
+                    }
+                }
+
+                int last = result.Count - 1;
+
+                // 제일 작은 수부터 출력
+                for (int j = last - 1; j >= 0; j--)
+                    writer.Write(result[j] + " ");
+
+                writer.WriteLine();
+                result.Clear();
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q9012()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
