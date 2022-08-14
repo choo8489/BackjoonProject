@@ -469,6 +469,57 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1024()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int L = int.Parse(input[1]);
+
+            // N = (x+1) + (x+2) + ... + (x+L)
+            // N = Lx + L(L+1) / 2
+            // Lx = N - L(L+1) / 2
+            // Lx / L = (N - L(L+1) / 2) / L
+            // x = (N - L(L+1) / 2) / L   => x가 정수가 됩니다.
+
+            int index = L;
+            int x;
+            while (true)
+            {
+                x = N - (index * (index + 1) / 2);
+
+                if (x % index == 0)
+                {
+                    x /= index;
+
+                    // 음이 아닌 정수 리스트이므로
+                    // x+1 >= 0  -> x >= -1 이어야 됩니다.
+                    if (x >= -1)
+                    {
+                        for (int i = 1; i < index + 1; i++)
+                        {
+                            writer.Write($"{i + x} ");
+                        }
+                        writer.Write("\n");
+                        break;
+                    }
+                }
+
+                if (index == 100) // 리스트의 길이는 100보다 작거나 같기 때문에 넘으면 종료
+                {
+                    writer.WriteLine(-1);
+                    break;
+                }
+
+                index++;
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1026()
         {
             int n = Convert.ToInt32(Console.ReadLine());
