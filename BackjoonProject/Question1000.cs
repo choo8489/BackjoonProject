@@ -590,6 +590,70 @@ namespace BackjoonProject
             Console.WriteLine(number.Min() * number.Max());
         }
 
+        public void Q1051()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+            int[,] rectangle = new int[N, M];
+
+            for (int i = 0; i < N; i++)
+            {
+                char[] row = reader.ReadLine().ToCharArray();
+                for (int j = 0; j < M; j++)
+                    rectangle[i, j] = int.Parse(row[j].ToString()); // N*M의 직사각형 값 할당
+            }
+
+            int x = 0;
+            int y = 0;
+            int size = 0;
+            int index = 1;
+
+            while (true)
+            {
+                if (x + index >= N || y + index >= M) // x와 y의 값이 N이나 M을 벗어나면 
+                {
+                    x++;
+
+                    if (x >= N) // x 값이 N보다 크거나 같으면 초기화 하고 y 증가
+                    {
+                        x = 0;
+                        y++;
+                    }
+
+                    if (y >= M) // y 값이 M보다 크거나 같으면 반복문 종료
+                        break;
+
+                    index = 0;
+                }
+
+                // 각 꼭지점의 값이 같은지 확인
+                if (index != 0 && rectangle[x, y] == rectangle[x + index, y + index] &&
+                    rectangle[x + index, y + index] == rectangle[x + index, y] &&
+                    rectangle[x + index, y] == rectangle[x, y + index])
+                {
+                    // 정사각형의 크기 계산
+                    if (size < (index + 1) * (index + 1))
+                        size = (index + 1) * (index + 1);
+                }
+
+                index++;
+
+            }
+
+            if (size == 0)
+                size = 1;
+
+            writer.WriteLine(size);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1065()
         {
             int n = int.Parse(Console.ReadLine());
