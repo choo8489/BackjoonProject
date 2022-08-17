@@ -649,6 +649,46 @@ namespace BackjoonProject
                 size = 1;
 
             writer.WriteLine(size);
+        }
+
+        public void Q1049()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]); // 끊어진 기타줄의 개수
+            int M = int.Parse(input[1]); // 기타줄 브랜드 개수
+
+            int[] package = new int[M];
+            int[] piece = new int[M];
+
+            for (int i = 0; i < M; i++)
+            {
+                // [0] : 6개가 들어있는 패키지의 가격
+                // [1] : 낱개로 살 때의 가격
+                string[] input2 = reader.ReadLine().Split();
+                package[i] = int.Parse(input2[0]);
+                piece[i] = int.Parse(input2[1]);
+            }
+
+            Array.Sort(package); // 패키지의 최솟값
+            Array.Sort(piece); // 낱개의 최솟값
+
+            int sum = 0;
+
+            // 패키지의 가격과 낱개 * 6개의 가격을 비교하여 더 적은 금액을 구하고
+            // (필요한 기타 줄 / 6) * 더 적은 금액 6개의 가격을 구합니다.
+            sum += (package[0] < piece[0] * 6) ? N / 6 * package[0] : N / 6 * piece[0] * 6;
+
+            // 계산하지 않은 나머지 줄의 갯수를 구합니다.
+            N %= 6;
+
+            // 패키지의 가격과 나머지 줄 * 낱개의 가격을 비교하여 더 적은 금액을 구하고
+            // 더 적은 금액으로 나머지 줄의 갯수를 곱해줍니다.
+            sum += (package[0] > N * piece[0]) ? N * piece[0] : package[0];
+
+            writer.WriteLine(sum);
 
             writer.Close();
             reader.Close();
@@ -998,6 +1038,44 @@ namespace BackjoonProject
                 Write($"{line - i + 1}/{ i}");
             else
                 Write($"{i}/{line - i + 1}");
+        }
+
+        public void Q1212()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            StringBuilder builder = new StringBuilder();
+
+            string[] binary = { "000", "001", "010", "011", "100", "101", "110", "111" };
+
+            char[] input = reader.ReadLine().ToCharArray(); // 8진수
+
+            if (input[0] == '0') // 입력이 0인경우 바로 0으로 출력
+            {
+                builder.Append(0);
+            }
+            else
+            {
+                for (int i = 0; i < input.Length; i++)
+                {
+                    int num = int.Parse(input[i].ToString());
+                    builder.Append(binary[num]);  // 한자리씩 읽어들여 2진수 3자리로 변형
+                }
+
+                while (true)
+                {
+                    if (builder[0] == '0') // 맨 앞자리가 0이 아닐 때까지 제거
+                        builder.Remove(0, 1);
+                    else
+                        break;
+                }
+            }
+
+            writer.WriteLine(builder);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1225()
@@ -1405,6 +1483,33 @@ namespace BackjoonProject
                 writer.WriteLine(input);
             else
                 writer.WriteLine(-1);
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1373()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string input = reader.ReadLine();
+            int count = input.Length % 3;
+
+            if (count != 0)
+            {
+                // 입력 받은 값을 3자리 씩 끊기 위해 맨 앞자리에 0을 붙여줍니다.
+                for (int i = 0; i < 3 - count; i++)
+                    input = "0" + input;
+            }
+
+            for (int i = 0; i < input.Length; i += 3)
+            {
+                // 3자리씩 10진수로 변형
+                writer.Write((input[i] - '0') * 4 + (input[i + 1] - '0') * 2 + (input[i + 2] - '0') * 1);
+            }
+
+            writer.WriteLine();
 
             writer.Close();
             reader.Close();
