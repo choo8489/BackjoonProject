@@ -590,6 +590,49 @@ namespace BackjoonProject
             Console.WriteLine(number.Min() * number.Max());
         }
 
+        public void Q1049()
+        {
+            StreamWriter writer = new StreamWriter(OpenStandardOutput());
+            StreamReader reader = new StreamReader(OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]); // 끊어진 기타줄의 개수
+            int M = int.Parse(input[1]); // 기타줄 브랜드 개수
+
+            int[] package = new int[M];
+            int[] piece = new int[M];
+
+            for (int i = 0; i < M; i++)
+            {
+                // [0] : 6개가 들어있는 패키지의 가격
+                // [1] : 낱개로 살 때의 가격
+                string[] input2 = reader.ReadLine().Split();
+                package[i] = int.Parse(input2[0]);
+                piece[i] = int.Parse(input2[1]);
+            }
+
+            Array.Sort(package); // 패키지의 최솟값
+            Array.Sort(piece); // 낱개의 최솟값
+
+            int sum = 0;
+
+            // 패키지의 가격과 낱개 * 6개의 가격을 비교하여 더 적은 금액을 구하고
+            // (필요한 기타 줄 / 6) * 더 적은 금액 6개의 가격을 구합니다.
+            sum += (package[0] < piece[0] * 6) ? N / 6 * package[0] : N / 6 * piece[0] * 6;
+
+            // 계산하지 않은 나머지 줄의 갯수를 구합니다.
+            N %= 6;
+
+            // 패키지의 가격과 나머지 줄 * 낱개의 가격을 비교하여 더 적은 금액을 구하고
+            // 더 적은 금액으로 나머지 줄의 갯수를 곱해줍니다.
+            sum += (package[0] > N * piece[0]) ? N * piece[0] : package[0];
+
+            writer.WriteLine(sum);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1051()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
@@ -651,44 +694,49 @@ namespace BackjoonProject
             writer.WriteLine(size);
         }
 
-        public void Q1049()
+        public void Q1059()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
             StreamReader reader = new StreamReader(OpenStandardInput());
 
-            string[] input = reader.ReadLine().Split();
-            int N = int.Parse(input[0]); // 끊어진 기타줄의 개수
-            int M = int.Parse(input[1]); // 기타줄 브랜드 개수
+            int L = int.Parse(reader.ReadLine());
+            List<int> input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse).ToList();
+            int n = int.Parse(reader.ReadLine());
+            input.Add(0); // n의 값이 S[0]의 값보다 작은 경우를 확인하기 위해 S[0] = 0값을 추가
+            int[] S = input.ToArray();
+            Array.Sort(S);
 
-            int[] package = new int[M];
-            int[] piece = new int[M];
+            int count = 0;
+            int index = 1;
+            int min = 0;
 
-            for (int i = 0; i < M; i++)
+            for (int i = 0; i < S.Length; i++)
             {
-                // [0] : 6개가 들어있는 패키지의 가격
-                // [1] : 낱개로 살 때의 가격
-                string[] input2 = reader.ReadLine().Split();
-                package[i] = int.Parse(input2[0]);
-                piece[i] = int.Parse(input2[1]);
+                if (S[i] < n && n < S[i + 1]) // 정수 집합 S에서 n의 위치를 찾기 위한 조건
+                {
+                    min = S[i] + 1; // 초기 A 값
+                    while (true)
+                    {
+                        if (min + index >= S[i + 1]) // B 값이 집합 S의 값에 도달한다면 초기화
+                        {
+                            index = 1;
+                            min++;
+                        }
+
+                        if (min >= S[i + 1] || min + index >= S[i + 1]) // 구간 A와 B 의 값이 좋은 구간을 벗어난다면 종료
+                            break;
+
+                        if (min <= n && n <= min + index) // 좋은 구간 카운팅
+                            count++;
+
+                        index++;
+                    }
+
+                    break;
+                }
             }
 
-            Array.Sort(package); // 패키지의 최솟값
-            Array.Sort(piece); // 낱개의 최솟값
-
-            int sum = 0;
-
-            // 패키지의 가격과 낱개 * 6개의 가격을 비교하여 더 적은 금액을 구하고
-            // (필요한 기타 줄 / 6) * 더 적은 금액 6개의 가격을 구합니다.
-            sum += (package[0] < piece[0] * 6) ? N / 6 * package[0] : N / 6 * piece[0] * 6;
-
-            // 계산하지 않은 나머지 줄의 갯수를 구합니다.
-            N %= 6;
-
-            // 패키지의 가격과 나머지 줄 * 낱개의 가격을 비교하여 더 적은 금액을 구하고
-            // 더 적은 금액으로 나머지 줄의 갯수를 곱해줍니다.
-            sum += (package[0] > N * piece[0]) ? N * piece[0] : package[0];
-
-            writer.WriteLine(sum);
+            writer.WriteLine(count);
 
             writer.Close();
             reader.Close();
