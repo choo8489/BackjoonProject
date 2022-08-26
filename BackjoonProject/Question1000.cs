@@ -694,6 +694,50 @@ namespace BackjoonProject
             writer.WriteLine(size);
         }
 
+        public void Q1052()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int K = int.Parse(input[1]);
+
+            int num = N;
+            int count = 0; // 남은 물병의 개수파악
+            int bottle = 0; // 구매한 꽃병의 수
+
+            while (true)
+            {
+                while (num > 0)
+                {
+                    if (num % 2 == 0)  // 짝수개이면 다 합칠 수 있고
+                    {
+                        num /= 2;
+                    }
+                    else // 아니라면 카운팅 하나 추가
+                    {
+                        num /= 2;
+                        count++;
+                    }
+                }
+
+                // 남은 물병의 개수가 K 개를 넘지 않으면 종료
+                if (count <= K)
+                    break;
+
+                // 아니라면 꽃병 하나 구매, N개수 증가
+                bottle++;
+                num = ++N;
+                count = 0;
+            }
+
+            writer.WriteLine(bottle);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1059()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
