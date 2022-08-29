@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 using static System.Console;
@@ -1141,6 +1142,52 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1251()
+        {
+            // 1251 단어 나누기
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string input = reader.ReadLine();
+
+            int left = 1; // 삼등분 해야되는 왼쪽 값
+            int right = 2; // 삼등분 해야하는 오른쪽 값
+            int length = input.Length;
+            List<string> result = new List<string>();
+
+            while (true)
+            {
+                char[] a = input[..left].ToArray(); // 삼등분한 첫번째 단어
+                Array.Reverse(a);
+
+                char[] b = input[left..right].ToArray(); // 삼등분한 두번째 단어
+                Array.Reverse(b);
+
+                char[] c = input[right..length].ToArray(); // // 삼등분한 세번째 단어
+                Array.Reverse(c);
+
+                result.Add(new string(a) + new string(b) + new string(c));
+
+                right++;
+
+                if (right >= length) // right의 값이 총 길이를 넘기면 left값 증가시키고 right값을 left+1로 초기화
+                {
+                    left++;
+                    right = left + 1;
+
+                    if (right >= length) // 초기화 후에도 length 보다 크다면 반복문 종료
+                        break;
+                }
+            }
+
+            result.Sort(); // 사전상 가장 앞에 있는 단어 오름차순 정렬
+
+            writer.WriteLine(result[0]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1259()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
@@ -1251,6 +1298,23 @@ namespace BackjoonProject
 
             for (int i = 0; i < result.Count; i++)
                 writer.Write(result[i] + " ");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1271()
+        {
+            //    // 1271
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            BigInteger n = BigInteger.Parse(input[0]);
+            BigInteger m = BigInteger.Parse(input[1]);
+
+            writer.WriteLine(n / m);
+            writer.WriteLine(n % m);
 
             writer.Close();
             reader.Close();
