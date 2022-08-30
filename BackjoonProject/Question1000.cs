@@ -1280,6 +1280,52 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1252()
+        {
+            //  https://bokhead.tistory.com/
+            // 1252 이진수 덧셈
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            BigInteger value = BigInteger.Parse(input[0]);
+            BigInteger value2 = BigInteger.Parse(input[1]);
+
+            string sum = (value + value2).ToString();
+
+            List<BigInteger> result = new List<BigInteger>();
+
+            int s = 0;
+
+            for (int i = sum.Length - 1; i >= 0; i--)
+            {
+                int j = int.Parse(sum[i].ToString()) + s;
+
+                if (j != 0)
+                {
+                    s = j / 2; // 다음 값에 해주기위해서
+                    result.Add(j % 2); // 이진수 값 추가
+                }
+                else
+                {
+                    s = 0;
+                    result.Add(0);
+                }
+            }
+
+            if (s == 1)
+                result.Add(s);
+
+            result.Reverse(); // 2진수 리버스
+
+            List<string> strings = result.ConvertAll<string>(x => x.ToString()); // string 형으로 바꾸기 위해서
+            writer.WriteLine(String.Join("", strings));
+
+            writer.Close();
+            reader.Close();
+
+        }
+
         public void Q1259()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
