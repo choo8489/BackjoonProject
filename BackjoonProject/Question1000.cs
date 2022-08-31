@@ -1599,6 +1599,62 @@ namespace BackjoonProject
                 Console.WriteLine("<");
         }
 
+        public void Q1333()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]); // 총 노래 곡
+            int L = int.Parse(input[1]); // 모든 노래의 길이
+            int D = int.Parse(input[2]); // 전화벨 울리는 초시간
+
+            int time = 0; // 전화벨을 들을 수 있는 시간 누적
+            int bell = 0; // 전화벨 체크 
+            int result = 0; // 정답
+            int index = 0; // N곡 인덱스 넘버
+
+            while (N - 1 >= index)
+            {
+                int music = 0; // 뮤직 진행 시간
+
+                while (true)
+                {
+                    if (music == L) // 뮤직 진행이 끝나면 반복문 종료
+                        break;
+
+                    if (bell >= D) // 전화벨 시간이 지나면 0초로 초기화
+                        bell = 0;
+
+                    music++;
+                    bell++;
+                    time++;
+                }
+
+                for (int j = 0; j < 5; j++) // 노래와 노래 사이 5초
+                {
+                    if (bell >= D) // 이 시간에 전화벨을 울릴 시간이 되면 프로그램 종료 준비
+                    {
+                        index = N; // 최상위 반복문을 종료하기 위한 플래그 
+                        result = time; // 종료되는 시간 측정
+                        break;
+                    }
+                    bell++;
+                    time++;
+                }
+
+                index++;
+            }
+
+            if (result == 0) // 만약 노래가 전부다 끝나기 전까지 전화를 못받았다면
+                result = (time % D == 0) ? time : time + D - (time % D); // 전화벨이 울릴시간을 측정하여 최종 값 계산
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1343()
         {
             StringBuilder sb = new StringBuilder();
@@ -1855,6 +1911,40 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1476()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int E = int.Parse(input[0]); // 1 <= E <= 15
+            int S = int.Parse(input[1]); // 1 <= S <= 28
+            int M = int.Parse(input[2]); // 1 <= M <= 19
+
+            int e = 1, s = 1, m = 1;
+
+            int result = 1;
+
+            while (true)
+            {
+                if (e == E && s == S && m == M) // 입력받은 ESM과 같으면 반복문 종료
+                    break;
+
+                // 각각 e s m 값을 증가시키다가 범위를 넘으면 1로 초기화
+                e = (e >= 15) ? 1 : ++e;
+                s = (s >= 28) ? 1 : ++s;
+                m = (m >= 19) ? 1 : ++m;
+
+                // 몇년인지 카운팅
+                result++;
+            }
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1546()
         {
             int n = int.Parse(Console.ReadLine());
@@ -2013,6 +2103,32 @@ namespace BackjoonProject
             // a = n(c-b)
             // a / (c-b) = n
             Console.WriteLine((a / (c - b)) + 1);
+        }
+
+        public void Q1789()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            long S = long.Parse(reader.ReadLine());
+
+            long N = 0;
+            long index = 1;
+            long sum = 0;
+
+            while (true)
+            {
+                sum += index++; // 자연수 누적
+                N++;
+
+                if (sum > S) // 누적된 자연수의 값이 S보다 클때 까지 반복
+                    break;
+            }
+
+            writer.WriteLine(N - 1);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1874()
