@@ -1234,6 +1234,65 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1236()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+
+            string[] array = new string[N];
+
+            for (int i = 0; i < N; i++)
+                array[i] = reader.ReadLine();
+
+            int columCount = 0;
+
+            // 행에서 경비원이 필요한 숫자 계산
+            for (int i = 0; i < N; i++)
+            {
+                bool isGuard = false;
+                for (int j = 0; j < M; j++)
+                {
+                    if (array[i][j] == 'X') // N행에서 경비원이 한명이라도 있으면 패스
+                    {
+                        isGuard = true;
+                        break;
+                    }
+                }
+
+                if (!isGuard) // N행에 경비원이 한명도 없으면 추가
+                    columCount++;
+            }
+
+            int rowCount = 0;
+
+            // 열에서 경비원이 필요한 숫자 계산
+            for (int i = 0; i < M; i++)
+            {
+                bool isGuard = false;
+                for (int j = 0; j < N; j++)
+                {
+                    if (array[j][i] == 'X') // M열에서 경비원이 한명이라도 있으면 패스
+                    {
+                        isGuard = true;
+                        break;
+                    }
+                }
+
+                if (!isGuard) // M열에 경비원이 한명도 없으면 추가
+                    rowCount++;
+            }
+
+            // 경비원이 더 큰수를 출력
+            writer.WriteLine((rowCount > columCount) ? rowCount : columCount);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1251()
         {
             // 1251 단어 나누기
