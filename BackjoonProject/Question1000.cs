@@ -787,6 +787,67 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1063()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            // 킹과 돌을 정수로 입력 받습니다. 
+            (int row, int colum) king = (int.Parse(input[0][1].ToString()), input[0][0] - 'A' + 1);
+            (int row, int colum) stone = (int.Parse(input[1][1].ToString()), input[1][0] - 'A' + 1);
+
+            int N = int.Parse(input[2]);
+
+            for (int i = 0; i < N; i++)
+            {
+                // 입력 받은 이동해야될 방향을 정수로 변경합니다.
+                (int row, int colum) = FindDir(reader.ReadLine());
+
+                // 킹을 이동시킵니다.
+                king = (king.row + row, king.colum + colum);
+
+                // 킹이 체스판을 벗어난다면 다시 원래대로 이동시키고 다음 이동을 진행합니다.
+                if (king.row >= 9 || king.colum >= 9 || king.row <= 0 || king.colum <= 0)
+                {
+                    king = (king.row - row, king.colum - colum);
+                    continue;
+                }
+
+                // 킹과 돌의 위치가 같다면 돌을 킹이 움직인 방향으로 똑같이 움직입니다
+                if (king.row == stone.row && king.colum == stone.colum)
+                    stone = (stone.row + row, stone.colum + colum);
+
+                // 돌의 위치가 체스판을 벗어난다면 돌과 킹을 원래대로 돌립니다.
+                if (stone.row >= 9 || stone.colum >= 9 || stone.row <= 0 || stone.colum <= 0)
+                {
+                    stone = (stone.row - row, stone.colum - colum);
+                    king = (king.row - row, king.colum - colum);
+                }
+            }
+
+            writer.WriteLine($"{(char)(king.colum + 'A' - 1)}{king.row}");
+            writer.WriteLine($"{(char)(stone.colum + 'A' - 1)}{stone.row}");
+
+            writer.Close();
+            reader.Close();
+
+            (int row, int colum) FindDir(string input)
+                => input switch
+                {
+                    "R" => (0, 1),
+                    "L" => (0, -1),
+                    "B" => (-1, 0),
+                    "T" => (1, 0),
+                    "RT" => (1, 1),
+                    "LT" => (1, -1),
+                    "RB" => (-1, 1),
+                    "LB" => (-1, -1),
+                    _ => throw new NotImplementedException(),
+                };
+        }
+
         public void Q1065()
         {
             int n = int.Parse(Console.ReadLine());
