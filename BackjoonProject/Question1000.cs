@@ -1031,6 +1031,35 @@ namespace BackjoonProject
             Console.WriteLine(count);
         }
 
+        public void Q1120()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int min = 50;
+
+            // A문자열과 B문자열의 차이만큼 반복문 진행
+            for (int i = 0; i <= input[1].Length - input[0].Length; i++)
+            {
+                int count = 0;
+
+                for (int j = 0; j < input[0].Length; j++)
+                {
+                    // 해당 문자가 같으면 카운팅 증가
+                    if (input[0][j] != input[1][j + i])
+                        count++;
+                }
+
+                min = (min > count) ? count : min;
+            }
+
+            writer.WriteLine(min);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1145()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
