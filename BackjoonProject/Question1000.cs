@@ -1895,6 +1895,125 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1350()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            string[] input = reader.ReadLine().Split();
+            long clusterSize = int.Parse(reader.ReadLine());
+            int[] size = new int[N];
+
+            long count = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                size[i] = int.Parse(input[i]);
+
+                // 파일의 크기가 0이 아니라면 클러스트의 필요 개수(파일의 크기 / 클러스트 크기) 만큼 저장
+                // 파일의 크기가 0이라면 0을 저장
+                count += (size[i] != 0) ? size[i] / clusterSize : 0;
+
+                // 위의 계산 후 남은 나머지가 있을 때 클러스트의 개수 추가
+                count += (size[i] % clusterSize > 0) ? 1 : 0;
+            }
+
+            WriteLine(count * clusterSize);
+
+            writer.Close();
+            reader.Close();
+        }
+        
+        public void Q1356()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            char[] input = reader.ReadLine().ToCharArray();
+            int[] value = new int[input.Length];
+
+            // 입력받은 값을 한자리수로 모두 저장
+            for (int i = 0; i < input.Length; i++)
+                value[i] = int.Parse(input[i].ToString());
+
+            int middle = 1; // 수를 나눈 자릿 수
+            bool result = false; // 결과 저장 변수
+
+            // 자릿수가 입력받은 수의 길이랑 같아지면 반복문 종료
+            while (middle != input.Length)
+            {
+                int leftSum = 1;
+                int rightSum = 1;
+
+                // 앞에서부터 나눈 자리수까지 곱
+                for (int i = 0; i < middle; i++)
+                    leftSum *= value[i];
+
+                // 나눈 자리수부터 입력받은 총 길이까지의 곱
+                for (int i = middle; i < input.Length; i++)
+                    rightSum *= value[i];
+
+                // 곱한 두 값이 같으면 반복문 종료
+                if (leftSum == rightSum)
+                {
+                    result = true;
+                    break;
+                }
+
+                // 나눈 자리수 증가
+                middle++;
+            }
+
+            WriteLine((result) ? "YES" : "NO");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1357()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            // 문자열을 Reverse 시킵니다.
+            string X = Reverse2(input[0]);
+            string Y = Reverse2(input[1]);
+
+            // 문자열을 int 형변환하여 더해주고 다시 문자열로 변경합니다.
+            string result = (int.Parse(X) + int.Parse(Y)).ToString();
+
+            // int로 바꿔주는 이유는 "001" -> 1로 변경시켜주기 위해서입니다.
+            WriteLine(int.Parse(Reverse(result)));
+
+            writer.Close();
+            reader.Close();
+
+            // Reverse 해주기위한 함수 선언
+            static string Reverse(string str)
+            {
+                char[] chars = str.ToCharArray();
+                Array.Reverse(chars);
+                return new string(chars);
+            }
+
+            static string Reverse2(string str)
+            {
+                char[] chars = str.ToCharArray();
+
+                for (int i = 0; i < str.Length / 2; i++)
+                {
+                    char ch = chars[i];
+                    chars[i] = chars[str.Length - i - 1];
+                    chars[str.Length - i - 1] = ch;
+                }
+
+                return new string(chars);
+            }
+        }
+
         public void Q1373()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
