@@ -818,6 +818,48 @@ namespace BackjoonProject
             }
         }
 
+        public void Q1072()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            long X = long.Parse(input[0]); // 게임 횟수
+            long Y = long.Parse(input[1]); // 이긴 게임
+
+            //부동소수점 오차주의
+            int avg = (int)(Y * 100 / X);
+
+            long start = 0;
+            long end = (int)1e9;
+            long middle;
+            long result = -1;
+
+            // start가 end보다 커지는 순간 프로그램 종료
+            while (start <= end)
+            {
+                // 이분탐색 중간 값
+                middle = (start + end) / 2;
+
+                // 추가로 한 게임횟수의 평균값이랑 기존 평균값을 비교
+                // 이긴횟수를 증가시키면 게임횟수도 증가 시켜줘야 합니다.
+                if ((int)((Y + middle) * 100 / (X + middle)) != avg)
+                {
+                    result = middle;
+                    end = middle - 1;
+                }
+                else
+                {
+                    start = middle + 1;
+                }
+            }
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1075()
         {
             int temp, i;
