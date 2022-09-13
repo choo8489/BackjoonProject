@@ -787,6 +787,67 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1063()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            // 킹과 돌을 정수로 입력 받습니다. 
+            (int row, int colum) king = (int.Parse(input[0][1].ToString()), input[0][0] - 'A' + 1);
+            (int row, int colum) stone = (int.Parse(input[1][1].ToString()), input[1][0] - 'A' + 1);
+
+            int N = int.Parse(input[2]);
+
+            for (int i = 0; i < N; i++)
+            {
+                // 입력 받은 이동해야될 방향을 정수로 변경합니다.
+                (int row, int colum) = FindDir(reader.ReadLine());
+
+                // 킹을 이동시킵니다.
+                king = (king.row + row, king.colum + colum);
+
+                // 킹이 체스판을 벗어난다면 다시 원래대로 이동시키고 다음 이동을 진행합니다.
+                if (king.row >= 9 || king.colum >= 9 || king.row <= 0 || king.colum <= 0)
+                {
+                    king = (king.row - row, king.colum - colum);
+                    continue;
+                }
+
+                // 킹과 돌의 위치가 같다면 돌을 킹이 움직인 방향으로 똑같이 움직입니다
+                if (king.row == stone.row && king.colum == stone.colum)
+                    stone = (stone.row + row, stone.colum + colum);
+
+                // 돌의 위치가 체스판을 벗어난다면 돌과 킹을 원래대로 돌립니다.
+                if (stone.row >= 9 || stone.colum >= 9 || stone.row <= 0 || stone.colum <= 0)
+                {
+                    stone = (stone.row - row, stone.colum - colum);
+                    king = (king.row - row, king.colum - colum);
+                }
+            }
+
+            writer.WriteLine($"{(char)(king.colum + 'A' - 1)}{king.row}");
+            writer.WriteLine($"{(char)(stone.colum + 'A' - 1)}{stone.row}");
+
+            writer.Close();
+            reader.Close();
+
+            (int row, int colum) FindDir(string input)
+                => input switch
+                {
+                    "R" => (0, 1),
+                    "L" => (0, -1),
+                    "B" => (-1, 0),
+                    "T" => (1, 0),
+                    "RT" => (1, 1),
+                    "LT" => (1, -1),
+                    "RB" => (-1, 1),
+                    "LB" => (-1, -1),
+                    _ => throw new NotImplementedException(),
+                };
+        }
+
         public void Q1065()
         {
             int n = int.Parse(Console.ReadLine());
@@ -1010,6 +1071,35 @@ namespace BackjoonProject
             }
 
             Console.WriteLine(count);
+        }
+
+        public void Q1120()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int min = 50;
+
+            // A문자열과 B문자열의 차이만큼 반복문 진행
+            for (int i = 0; i <= input[1].Length - input[0].Length; i++)
+            {
+                int count = 0;
+
+                for (int j = 0; j < input[0].Length; j++)
+                {
+                    // 해당 문자가 같으면 카운팅 증가
+                    if (input[0][j] != input[1][j + i])
+                        count++;
+                }
+
+                min = (min > count) ? count : min;
+            }
+
+            writer.WriteLine(min);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1145()
@@ -1276,6 +1366,65 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1236()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+
+            string[] array = new string[N];
+
+            for (int i = 0; i < N; i++)
+                array[i] = reader.ReadLine();
+
+            int columCount = 0;
+
+            // 행에서 경비원이 필요한 숫자 계산
+            for (int i = 0; i < N; i++)
+            {
+                bool isGuard = false;
+                for (int j = 0; j < M; j++)
+                {
+                    if (array[i][j] == 'X') // N행에서 경비원이 한명이라도 있으면 패스
+                    {
+                        isGuard = true;
+                        break;
+                    }
+                }
+
+                if (!isGuard) // N행에 경비원이 한명도 없으면 추가
+                    columCount++;
+            }
+
+            int rowCount = 0;
+
+            // 열에서 경비원이 필요한 숫자 계산
+            for (int i = 0; i < M; i++)
+            {
+                bool isGuard = false;
+                for (int j = 0; j < N; j++)
+                {
+                    if (array[j][i] == 'X') // M열에서 경비원이 한명이라도 있으면 패스
+                    {
+                        isGuard = true;
+                        break;
+                    }
+                }
+
+                if (!isGuard) // M열에 경비원이 한명도 없으면 추가
+                    rowCount++;
+            }
+
+            // 경비원이 더 큰수를 출력
+            writer.WriteLine((rowCount > columCount) ? rowCount : columCount);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1251()
         {
             // 1251 단어 나누기
@@ -1320,6 +1469,52 @@ namespace BackjoonProject
 
             writer.Close();
             reader.Close();
+        }
+
+        public void Q1252()
+        {
+            //  https://bokhead.tistory.com/
+            // 1252 이진수 덧셈
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            BigInteger value = BigInteger.Parse(input[0]);
+            BigInteger value2 = BigInteger.Parse(input[1]);
+
+            string sum = (value + value2).ToString();
+
+            List<BigInteger> result = new List<BigInteger>();
+
+            int s = 0;
+
+            for (int i = sum.Length - 1; i >= 0; i--)
+            {
+                int j = int.Parse(sum[i].ToString()) + s;
+
+                if (j != 0)
+                {
+                    s = j / 2; // 다음 값에 해주기위해서
+                    result.Add(j % 2); // 이진수 값 추가
+                }
+                else
+                {
+                    s = 0;
+                    result.Add(0);
+                }
+            }
+
+            if (s == 1)
+                result.Add(s);
+
+            result.Reverse(); // 2진수 리버스
+
+            List<string> strings = result.ConvertAll<string>(x => x.ToString()); // string 형으로 바꾸기 위해서
+            writer.WriteLine(String.Join("", strings));
+
+            writer.Close();
+            reader.Close();
+
         }
 
         public void Q1259()
@@ -1595,6 +1790,62 @@ namespace BackjoonProject
                 Console.WriteLine("<");
         }
 
+        public void Q1333()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]); // 총 노래 곡
+            int L = int.Parse(input[1]); // 모든 노래의 길이
+            int D = int.Parse(input[2]); // 전화벨 울리는 초시간
+
+            int time = 0; // 전화벨을 들을 수 있는 시간 누적
+            int bell = 0; // 전화벨 체크 
+            int result = 0; // 정답
+            int index = 0; // N곡 인덱스 넘버
+
+            while (N - 1 >= index)
+            {
+                int music = 0; // 뮤직 진행 시간
+
+                while (true)
+                {
+                    if (music == L) // 뮤직 진행이 끝나면 반복문 종료
+                        break;
+
+                    if (bell >= D) // 전화벨 시간이 지나면 0초로 초기화
+                        bell = 0;
+
+                    music++;
+                    bell++;
+                    time++;
+                }
+
+                for (int j = 0; j < 5; j++) // 노래와 노래 사이 5초
+                {
+                    if (bell >= D) // 이 시간에 전화벨을 울릴 시간이 되면 프로그램 종료 준비
+                    {
+                        index = N; // 최상위 반복문을 종료하기 위한 플래그 
+                        result = time; // 종료되는 시간 측정
+                        break;
+                    }
+                    bell++;
+                    time++;
+                }
+
+                index++;
+            }
+
+            if (result == 0) // 만약 노래가 전부다 끝나기 전까지 전화를 못받았다면
+                result = (time % D == 0) ? time : time + D - (time % D); // 전화벨이 울릴시간을 측정하여 최종 값 계산
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1343()
         {
             StringBuilder sb = new StringBuilder();
@@ -1684,6 +1935,125 @@ namespace BackjoonProject
 
             writer.Close();
             reader.Close();
+        }
+
+        public void Q1350()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            string[] input = reader.ReadLine().Split();
+            long clusterSize = int.Parse(reader.ReadLine());
+            int[] size = new int[N];
+
+            long count = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                size[i] = int.Parse(input[i]);
+
+                // 파일의 크기가 0이 아니라면 클러스트의 필요 개수(파일의 크기 / 클러스트 크기) 만큼 저장
+                // 파일의 크기가 0이라면 0을 저장
+                count += (size[i] != 0) ? size[i] / clusterSize : 0;
+
+                // 위의 계산 후 남은 나머지가 있을 때 클러스트의 개수 추가
+                count += (size[i] % clusterSize > 0) ? 1 : 0;
+            }
+
+            WriteLine(count * clusterSize);
+
+            writer.Close();
+            reader.Close();
+        }
+        
+        public void Q1356()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            char[] input = reader.ReadLine().ToCharArray();
+            int[] value = new int[input.Length];
+
+            // 입력받은 값을 한자리수로 모두 저장
+            for (int i = 0; i < input.Length; i++)
+                value[i] = int.Parse(input[i].ToString());
+
+            int middle = 1; // 수를 나눈 자릿 수
+            bool result = false; // 결과 저장 변수
+
+            // 자릿수가 입력받은 수의 길이랑 같아지면 반복문 종료
+            while (middle != input.Length)
+            {
+                int leftSum = 1;
+                int rightSum = 1;
+
+                // 앞에서부터 나눈 자리수까지 곱
+                for (int i = 0; i < middle; i++)
+                    leftSum *= value[i];
+
+                // 나눈 자리수부터 입력받은 총 길이까지의 곱
+                for (int i = middle; i < input.Length; i++)
+                    rightSum *= value[i];
+
+                // 곱한 두 값이 같으면 반복문 종료
+                if (leftSum == rightSum)
+                {
+                    result = true;
+                    break;
+                }
+
+                // 나눈 자리수 증가
+                middle++;
+            }
+
+            WriteLine((result) ? "YES" : "NO");
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q1357()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            // 문자열을 Reverse 시킵니다.
+            string X = Reverse2(input[0]);
+            string Y = Reverse2(input[1]);
+
+            // 문자열을 int 형변환하여 더해주고 다시 문자열로 변경합니다.
+            string result = (int.Parse(X) + int.Parse(Y)).ToString();
+
+            // int로 바꿔주는 이유는 "001" -> 1로 변경시켜주기 위해서입니다.
+            WriteLine(int.Parse(Reverse(result)));
+
+            writer.Close();
+            reader.Close();
+
+            // Reverse 해주기위한 함수 선언
+            static string Reverse(string str)
+            {
+                char[] chars = str.ToCharArray();
+                Array.Reverse(chars);
+                return new string(chars);
+            }
+
+            static string Reverse2(string str)
+            {
+                char[] chars = str.ToCharArray();
+
+                for (int i = 0; i < str.Length / 2; i++)
+                {
+                    char ch = chars[i];
+                    chars[i] = chars[str.Length - i - 1];
+                    chars[str.Length - i - 1] = ch;
+                }
+
+                return new string(chars);
+            }
         }
 
         public void Q1373()
@@ -1851,6 +2221,40 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1476()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int E = int.Parse(input[0]); // 1 <= E <= 15
+            int S = int.Parse(input[1]); // 1 <= S <= 28
+            int M = int.Parse(input[2]); // 1 <= M <= 19
+
+            int e = 1, s = 1, m = 1;
+
+            int result = 1;
+
+            while (true)
+            {
+                if (e == E && s == S && m == M) // 입력받은 ESM과 같으면 반복문 종료
+                    break;
+
+                // 각각 e s m 값을 증가시키다가 범위를 넘으면 1로 초기화
+                e = (e >= 15) ? 1 : ++e;
+                s = (s >= 28) ? 1 : ++s;
+                m = (m >= 19) ? 1 : ++m;
+
+                // 몇년인지 카운팅
+                result++;
+            }
+
+            writer.WriteLine(result);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1546()
         {
             int n = int.Parse(Console.ReadLine());
@@ -2009,6 +2413,32 @@ namespace BackjoonProject
             // a = n(c-b)
             // a / (c-b) = n
             Console.WriteLine((a / (c - b)) + 1);
+        }
+
+        public void Q1789()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            long S = long.Parse(reader.ReadLine());
+
+            long N = 0;
+            long index = 1;
+            long sum = 0;
+
+            while (true)
+            {
+                sum += index++; // 자연수 누적
+                N++;
+
+                if (sum > S) // 누적된 자연수의 값이 S보다 클때 까지 반복
+                    break;
+            }
+
+            writer.WriteLine(N - 1);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1874()
