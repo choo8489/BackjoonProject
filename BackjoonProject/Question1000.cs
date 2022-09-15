@@ -271,6 +271,31 @@ namespace BackjoonProject
             }
         }
 
+        public void Q1011()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine()); // 테스트 케이스
+
+            for (int i = 0; i < T; i++)
+            {
+                string[] input = reader.ReadLine().Split();
+                int x = int.Parse(input[0]);
+                int y = int.Parse(input[1]);
+
+                int distance = y - x; // 두 지점 거리
+                float sqrt = MathF.Sqrt(distance); // 제곱근
+                int round = (int)MathF.Round(sqrt); // 제곱근 반올림
+
+                // 이동한 횟수
+                WriteLine((sqrt <= round) ? round * 2 - 1 : round * 2);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1012()
         {
             int t = int.Parse(Console.ReadLine());
