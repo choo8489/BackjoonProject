@@ -1024,6 +1024,45 @@ namespace BackjoonProject
             Console.WriteLine(count);
         }
 
+        public void Q1099()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine()); // 사람의 수 N
+            string[] input = reader.ReadLine().Split();
+
+            int[] result = new int[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                // 자기보다 키가 큰 사람이 왼쪽에 몇 명있는지 입력
+                int count = int.Parse(input[i]);
+
+                for (int j = 0; j < N; j++)
+                {
+                    // 자리가 비어있고 내 앞에 키큰 사람이 존재 하지 않는다면 자리
+                    if (count == 0 && result[j] == 0)
+                    {
+                        result[j] = i + 1;
+                        break;
+                    }
+                    // 자기보다 키큰 사람이 체킹되면 키큰 사람 갯수 하나씩 빼기
+                    else if (result[j] == 0)
+                    {
+                        count--;
+                    }
+                }
+            }
+
+            for (int i = 0; i < N; i++)
+                writer.Write($"{result[i]} ");
+
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1100()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
