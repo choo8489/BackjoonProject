@@ -198,6 +198,21 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q10817()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            Array.Sort(input); // 오름차순으로 정렬
+
+            writer.WriteLine(input[1]); // 두번째로 큰 정수 출력
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10818()
         {
             int n = int.Parse(Console.ReadLine());

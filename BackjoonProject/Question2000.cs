@@ -892,6 +892,24 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2752()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+            Array.Sort(input); // 오름차순으로 정렬
+
+            for (int i = 0; i < input.Length; i++)
+                writer.Write(input[i] + " ");
+
+            writer.WriteLine();
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2775()
         {
             int t = int.Parse(ReadLine());
