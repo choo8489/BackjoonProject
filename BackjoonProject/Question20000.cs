@@ -7,6 +7,56 @@ namespace BackjoonProject
 {
     class Question20000
     {
+        public void Q24416()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            int count = 0;
+            int count2 = 0;
+
+            Fib(N, ref count);
+            Fibonacci(N, ref count2);
+
+            writer.WriteLine($"{count} {count2}");
+
+            writer.Close();
+            reader.Close();
+
+            // 재귀호출
+            int Fib(int n, ref int count)
+            {
+                if (n == 1 || n == 2)
+                {
+                    count++; // 코드1 카운팅
+                    return 1;
+                }
+                else
+                {
+                    return Fib(n - 1, ref count) + Fib(n - 2, ref count);
+                }
+            }
+
+            // 동적프로그래밍 
+            int Fibonacci(int n, ref int count)
+            {
+                int[] f = new int[n + 1];
+
+                f[1] = 1;
+                f[2] = 1;
+
+                for (int i = 3; i <= n; i++)
+                {
+                    f[i] = f[i - 1] + f[i - 2];
+                    // 코드2 카운팅
+                    count++;
+                }
+
+                return f[n];
+            }
+        }
         public void Q24444()
         {
             int cnt = 0;
