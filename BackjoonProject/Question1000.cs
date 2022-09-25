@@ -2285,6 +2285,32 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1463()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            int[] dp = new int[N + 1];
+
+            for (int i = 2; i < dp.Length; i++)
+            {
+                dp[i] = dp[i - 1] + 1; // 1의 최솟값
+
+                if (i % 3 == 0)
+                    dp[i] = Math.Min(dp[i], dp[i / 3] + 1); // 3의 최솟값
+
+                if (i % 2 == 0)
+                    dp[i] = Math.Min(dp[i], dp[i / 2] + 1); // 2의 최솟값
+            }
+
+            writer.WriteLine(dp[N]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1476()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
