@@ -2584,6 +2584,35 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1904()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            int[] dp = new int[N + 1];
+
+            dp[1] = 1;
+
+            // N이 1인 경우 dp[2]을 참조하게 되어 OutOfRange가 발생합니다.
+            if (N > 1)
+            {
+                dp[2] = 2;
+
+                for (int i = 3; i <= N; i++)
+                {
+                    // 문제에서 15746을 나눈 나머지를 출력하라고 합니다.
+                    dp[i] = (dp[i - 1] + dp[i - 2]) % 15746;
+                }
+            }
+
+            writer.WriteLine(dp[N]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1920()
         {
             // 기본 List 서치방식
