@@ -143,6 +143,67 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q9184()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[,,] dp = new int[21, 21, 21];
+            while (true)
+            {
+                int[] N = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                if (N[0] == -1 && N[1] == -1 && N[2] == -1)
+                    break;
+
+                writer.WriteLine($"w({N[0]}, {N[1]}, {N[2]}) = {Result(N[0], N[1], N[2])}");
+            }
+
+            writer.Close();
+            reader.Close();
+
+            // 동적 프로그래밍
+            int Result(int a, int b, int c)
+            {
+                if (a <= 0 || b <= 0 || c <= 0)
+                    return 1;
+
+                if (a > 20 || b > 20 || c > 20)
+                    return Result(20, 20, 20);
+
+                // 이미 계산된 값이라면 계산하지 않고 리턴
+                if (dp[a, b, c] != 0)
+                    return dp[a, b, c];
+
+                if (a < b && b < c)
+                {
+                    dp[a, b, c] = Result(a, b, c - 1) + Result(a, b - 1, c - 1)
+                        - Result(a, b - 1, c);
+                    return dp[a, b, c];
+                }
+
+                dp[a, b, c] = Result(a - 1, b, c) + Result(a - 1, b - 1, c)
+                    + Result(a - 1, b, c - 1) - Result(a - 1, b - 1, c - 1);
+                return dp[a, b, c];
+            }
+
+            // 재귀함수
+            int W(int a, int b, int c)
+            {
+                if (a <= 0 || b <= 0 || c <= 0)
+                    return 1;
+
+                if (a > 20 || b > 20 || c > 20)
+                    return W(20, 20, 20);
+
+                if (a < b && b < c)
+                    return W(a, b, c - 1) + W(a, b - 1, c - 1) - W(a, b - 1, c);
+
+                return W(a - 1, b, c) + W(a - 1, b - 1, c)
+                    + W(a - 1, b, c - 1) - W(a - 1, b - 1, c - 1);
+            }
+        }
+
         public void Q9237()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
