@@ -226,6 +226,37 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q9461()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            // 테스트 케이스 개수 T
+            int T = int.Parse(reader.ReadLine());
+            for (int i = 0; i < T; i++)
+            {
+                int N = int.Parse(reader.ReadLine());
+
+                // N값이 1, 2 인경우 때문에 처음에 3을 그냥 더했습니다. ( N의 크기가 100으로 작기 때문에 )
+                long[] dp = new long[3 + N + 1];
+
+                dp[1] = 1;
+                dp[2] = 1;
+                dp[3] = 1;
+
+                for (int j = 4; j <= N; j++)
+                {
+                    // 점화식
+                    dp[j] = dp[j - 2] + dp[j - 3];
+                }
+
+                writer.WriteLine(dp[N]);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q9498()
         {
             int grade = int.Parse(Console.ReadLine());
