@@ -1200,6 +1200,40 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1149()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            int[,] dp = new int[N + 1, 3];
+
+            dp[0, 0] = 0;
+            dp[0, 1] = 0;
+            dp[0, 2] = 0;
+
+            for (int i = 1; i <= N; i++)
+            {
+                int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                // i번째 집이 Red일 경우
+                dp[i, 0] = Math.Min(dp[i - 1, 1], dp[i - 1, 2]) + input[0];
+
+                // i번째 집이 Green일 경우
+                dp[i, 1] = Math.Min(dp[i - 1, 0], dp[i - 1, 2]) + input[1];
+
+                // i번째 집이  Blue일 경우
+                dp[i, 2] = Math.Min(dp[i - 1, 0], dp[i - 1, 1]) + input[2];
+            }
+
+            // 최소비용
+            writer.WriteLine(Math.Min(dp[N, 0], Math.Min(dp[N, 1], dp[N, 2])));
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1152()
         {
             string[] str = Console.ReadLine().Split();
