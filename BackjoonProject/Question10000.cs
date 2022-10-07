@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 using static System.Console;
@@ -278,6 +279,85 @@ namespace BackjoonProject
                 }
             }
 
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q10844()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            BigInteger[,] dp = new BigInteger[N + 1, 10];
+
+            for (int i = 0; i < 10; i++)
+                dp[1, i] = 1;
+
+            for (int i = 2; i < N + 1; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (j == 0)
+                        dp[i, j] = dp[i - 1, 1];
+                    else if (j == 9)
+                        dp[i, j] = dp[i - 1, 8];
+                    else
+                        dp[i, j] = dp[i - 1, j - 1] + dp[i - 1, j + 1];
+
+                    //dp[i, j] %= 1000000000;
+                }
+            }
+
+            BigInteger sum = 0;
+
+            for (int i = 1; i < 10; i++)
+                sum += dp[N, i];
+
+
+            writer.WriteLine(sum % 1000000000); //  % 1000000000
+
+            writer.Close();
+            reader.Close();
+        }
+
+        public void Q10844_2()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            long[,] dp = new long[N + 1, 10];
+
+            for (int i = 0; i < 10; i++)
+                dp[1, i] = 1;
+
+            for (int i = 2; i < N + 1; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (j == 0)
+                        dp[i, j] = dp[i - 1, 1];
+                    else if (j == 9)
+                        dp[i, j] = dp[i - 1, 8];
+                    else
+                        dp[i, j] = dp[i - 1, j - 1] + dp[i - 1, j + 1];
+
+                    dp[i, j] %= 1000000000;
+                }
+            }
+
+            long sum = 0;
+
+            for (int i = 1; i < 10; i++)
+            {
+                sum += dp[N, i];
+            }
+
+            writer.WriteLine(sum % 1000000000); //  % 1000000000
 
             writer.Close();
             reader.Close();
