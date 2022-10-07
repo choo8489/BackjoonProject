@@ -2647,6 +2647,36 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1912()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            string[] input = reader.ReadLine().Split();
+            int[] dp = new int[N + 1];
+
+            for (int i = 1; i <= N; i++)
+                dp[i] = int.Parse(input[i - 1]);
+
+            int max = dp[1];
+
+            for (int i = 2; i <= N; i++)
+            {
+                // 이전의 합이 음수가 아니거나 현재까지 더했을 때 값이 음수가 아니면 누적
+                if (dp[i - 1] > 0 && dp[i] + dp[i - 1] > 0)
+                    dp[i] += dp[i - 1];
+
+                if (max < dp[i])
+                    max = dp[i];
+            }
+
+            writer.WriteLine(max);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1920()
         {
             // 기본 List 서치방식
