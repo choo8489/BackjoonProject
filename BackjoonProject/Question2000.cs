@@ -452,6 +452,37 @@ namespace BackjoonProject
                 Console.WriteLine(result[i]);
         }
 
+        public void Q2579()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            int[] dp = new int[N + 1];
+            int[] input = new int[N + 1];
+
+            for (int i = 1; i <= N; i++)
+                input[i] = int.Parse(reader.ReadLine());
+
+            dp[1] = input[1];
+
+            // N이 1이 입력될 때 에러가 안나도록 예외처리 추가
+            if (N >= 2)
+                dp[2] = input[1] + input[2];
+
+            for (int i = 3; i <= N; i++)
+            {
+                // 각 계단을 밟을때 최댓 값을 찾습니다.
+                dp[i] = Math.Max(dp[i - 2], dp[i - 3] + input[i - 1]) + input[i];
+            }
+
+            writer.WriteLine(dp[N]);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2581()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
