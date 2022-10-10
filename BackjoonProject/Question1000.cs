@@ -1282,6 +1282,39 @@ namespace BackjoonProject
             writer.Close();
         }
 
+        public void Q1158()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int K = int.Parse(input[1]);
+
+            Queue<int> queue = new Queue<int>();
+
+            // 1부터 N까지를 큐에 담습니다.
+            for (int i = 1; i <= N; i++)
+                queue.Enqueue(i);
+
+            writer.Write("<");
+
+            while (queue.Count > 1)
+            {
+                // K-1번까지 큐에서 디큐하고 다시 인큐 합니다
+                for (int i = 1; i < K; i++)
+                    queue.Enqueue(queue.Dequeue());
+
+                // 제거해야될 K번째 사람을 디큐해주고 출력해줍니다.
+                writer.Write($"{queue.Dequeue()}, ");
+            }
+
+            writer.WriteLine($"{queue.Dequeue()}>");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1159()
         {
             StringBuilder builder = new StringBuilder();
