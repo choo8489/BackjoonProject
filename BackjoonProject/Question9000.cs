@@ -143,6 +143,34 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q9095()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int t = int.Parse(reader.ReadLine());
+            int[] dp = new int[12];
+
+            dp[1] = 1;
+            dp[2] = 2;
+            dp[3] = 4;
+
+            for (int i = 0; i < t; i++)
+            {
+                int n = int.Parse(reader.ReadLine());
+
+                for (int j = 4; j <= n + 1; j++)
+                {
+                    dp[j] = dp[j - 3] + dp[j - 2] + dp[j - 1];
+                }
+
+                writer.WriteLine(dp[n]);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q9184()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
