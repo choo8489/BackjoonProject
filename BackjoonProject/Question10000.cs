@@ -1212,6 +1212,49 @@ namespace BackjoonProject
             Console.WriteLine(builder);
         }
 
+        public void Q15649()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+
+            int[] result = new int[9];
+            bool[] visited = new bool[9];
+
+            DFS(0);
+
+            writer.Close();
+            reader.Close();
+
+            void DFS(int count)
+            {
+                if (count == M)
+                {
+                    // 카운트가 M만큼 된다면 출력 
+                    for (int i = 0; i < M; i++)
+                        writer.Write($"{result[i]} ");
+                    writer.WriteLine();
+                }
+                else
+                {
+                    for (int i = 1; i <= N; i++)
+                    {
+                        // 뽑은 숫자의 방문 유무를 저장
+                        if (!visited[i])
+                        {
+                            visited[i] = true;
+                            result[count] = i;
+                            DFS(count + 1);
+                            visited[i] = false;
+                        }
+                    }
+                }
+            }
+        }
+
         public void Q15829()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
