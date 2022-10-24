@@ -10,6 +10,29 @@ namespace BackjoonProject
 {
     class Question5000
     {
+        public void Q5543()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int[] buger = new int[3];
+            int[] drink = new int[2];
+
+            for (int i = 0; i < 3; i++)
+                buger[i] = int.Parse(reader.ReadLine());
+
+            for (int i = 0; i < 2; i++)
+                drink[i] = int.Parse(reader.ReadLine());
+
+            Array.Sort(buger);
+            Array.Sort(drink);
+
+            writer.WriteLine(buger[0] + drink[0] - 50);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q5585()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());

@@ -617,6 +617,27 @@ namespace BackjoonProject
             }
         }
 
+        public void Q10953()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+
+            for (int i = 0; i < T; i++)
+            {
+                string input = reader.ReadLine();
+                // 0 = A
+                // 1 = ,
+                // 2 = B
+                // 0번째 char랑 2번째 char를 더해주면 A+B의 합을 구할 수 있습니다.
+                writer.WriteLine(int.Parse(input[0].ToString()) + int.Parse(input[2].ToString()));
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10989()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
@@ -741,6 +762,50 @@ namespace BackjoonProject
                 // n-1Ck-1 까지의 합과 n-1Ck까지의 합을 더한 값
                 return Binomial(n - 1, k - 1) + Binomial(n - 1, k);
             }
+        }
+
+        public void Q11053()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int[] dp = new int[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                dp[i] = 1;
+
+                for (int j = 0; j < i; j++)
+                {
+                    // 선택된 수열에 앞에 값보다 크고
+                    // 저장된 수열의 갯수를 늘려주며 현재 선택된 수열의 길이를 변경
+                    if (input[j] < input[i] && dp[i] < dp[j] + 1)
+                        dp[i] = dp[j] + 1;
+                }
+            }
+
+            // dp[0] = 1 (10)
+            // dp[1] = 2 (10,20)
+            // dp[2] = 1 (10)
+            // dp[3] = 3 (10,20,30)
+            // dp[4] = 2 (10,20)
+            // dp[5] = 4 (10,20,30,50)
+
+            int max = dp[0];
+
+            // 가장 긴 수열의 길이를 찾아야 합니다.
+            for (int i = 1; i < N; i++)
+            {
+                if (max < dp[i])
+                    max = dp[i];
+            }
+
+            writer.WriteLine(max);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q11399()
