@@ -617,6 +617,27 @@ namespace BackjoonProject
             }
         }
 
+        public void Q10953()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+
+            for (int i = 0; i < T; i++)
+            {
+                string input = reader.ReadLine();
+                // 0 = A
+                // 1 = ,
+                // 2 = B
+                // 0번째 char랑 2번째 char를 더해주면 A+B의 합을 구할 수 있습니다.
+                writer.WriteLine(int.Parse(input[0].ToString()) + int.Parse(input[2].ToString()));
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q10989()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());

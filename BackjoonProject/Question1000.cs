@@ -2512,6 +2512,41 @@ namespace BackjoonProject
             }
         }
 
+        public void Q1676()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int count = 0;
+
+            for (int i = 1; i <= N; i++)
+            {
+                // 125의 배수 일경우 3개 추가
+                if (i % 125 == 0)
+                {
+                    count += 3;
+                    continue;
+                }
+
+                //// 25의 배수 일경우 2개 추가
+                if (i % 25 == 0)
+                {
+                    count += 2;
+                    continue;
+                }
+
+                // 5의 배수 일경우  1개 추가
+                if (i % 5 == 0)
+                    count++;
+            }
+
+            writer.WriteLine(count);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1697()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
