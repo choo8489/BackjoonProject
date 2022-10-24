@@ -743,6 +743,50 @@ namespace BackjoonProject
             }
         }
 
+        public void Q11053()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+            int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+            int[] dp = new int[N];
+
+            for (int i = 0; i < N; i++)
+            {
+                dp[i] = 1;
+
+                for (int j = 0; j < i; j++)
+                {
+                    // 선택된 수열에 앞에 값보다 크고
+                    // 저장된 수열의 갯수를 늘려주며 현재 선택된 수열의 길이를 변경
+                    if (input[j] < input[i] && dp[i] < dp[j] + 1)
+                        dp[i] = dp[j] + 1;
+                }
+            }
+
+            // dp[0] = 1 (10)
+            // dp[1] = 2 (10,20)
+            // dp[2] = 1 (10)
+            // dp[3] = 3 (10,20,30)
+            // dp[4] = 2 (10,20)
+            // dp[5] = 4 (10,20,30,50)
+
+            int max = dp[0];
+
+            // 가장 긴 수열의 길이를 찾아야 합니다.
+            for (int i = 1; i < N; i++)
+            {
+                if (max < dp[i])
+                    max = dp[i];
+            }
+
+            writer.WriteLine(max);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q11399()
         {
             // 11399 그리디 알고리즘 / 정렬
