@@ -1879,6 +1879,33 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1302()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            Dictionary<string, int> order = new Dictionary<string, int>();
+
+            for (int i = 0; i < N; i++)
+            {
+                string input = reader.ReadLine();
+                // 입력 받은 책의 이름이 있다면 팔린 횟수만 증가
+                if (order.ContainsKey(input))
+                    order[input]++;
+                else // 책의 이름이 없다면 딕셔너리에 추가
+                    order.Add(input, 1);
+            }
+
+            // 팔린 횟수를 내림차순으로 정렬한것에 책의 이름을 가지고 오름차순으로 정렬하여
+            // 가장 많이 팔린책 중 사전 순으로 가장 앞서는 제목을 출력
+            writer.WriteLine(order.OrderByDescending(o => o.Value).ThenBy(o => o.Key).First().Key);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1316()
         {
             int n = int.Parse(Console.ReadLine());
@@ -2924,6 +2951,49 @@ namespace BackjoonProject
                 else
                     return (x.end < y.end) ? -1 : 1; // 끝나는 순서가 빠른 순으로
             }
+        }
+
+        public void Q1932()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int N = int.Parse(reader.ReadLine());
+
+            int[][] dp = new int[N][];
+
+            dp[0] = new int[1];
+            dp[0][0] = int.Parse(reader.ReadLine());
+
+            for (int i = 1; i < N; i++)
+            {
+                int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                dp[i] = new int[input.Length];
+
+                for (int j = 0; j < input.Length; j++)
+                {
+                    if (j == 0) // 맨 왼쪽에 있는 값의 점화식
+                        dp[i][j] = dp[i - 1][j] + input[j];
+                    else if (j == input.Length - 1) // 맨 오른쪽에 있는 값의 점화식
+                        dp[i][j] = dp[i - 1][j - 1] + input[j];
+                    else // 두개의 대각선을 선택할 수 있는 정수의 점화식
+                        dp[i][j] = Math.Max(dp[i - 1][j] + input[j], dp[i - 1][j - 1] + input[j]);
+                }
+            }
+
+            int max = 0;
+            // 마지막 층에서 최대값을 찾는 반복문
+            for (int i = 0; i < dp[N - 1].Length; i++)
+            {
+                if (max < dp[N - 1][i])
+                    max = dp[N - 1][i];
+            }
+
+            writer.WriteLine(max);
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1966()
