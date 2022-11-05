@@ -60,5 +60,19 @@ namespace BackjoonProject
 
             Console.WriteLine(count);
         }
+
+        public void Q3053()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int R = int.Parse(reader.ReadLine());
+
+            writer.WriteLine($"{R * R * Math.PI:0.000000}");
+            writer.WriteLine($"{R * R * 2.0d:0.000000}");
+
+            writer.Close();
+            reader.Close();
+        }
     }
 }

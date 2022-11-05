@@ -2485,6 +2485,40 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1629()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            long[] input = Array.ConvertAll(reader.ReadLine().Split(), long.Parse);
+            long a = input[0];
+            long b = input[1];
+            long c = input[2];
+
+            //지수법칙 : a^(n+m) = a^n * a^m
+            //모듈러 성질 : (a * b) % c = (a % c * b % c) % c
+            writer.WriteLine(DaC(a, b));
+
+            reader.Close();
+            writer.Close();
+
+            // DivideAndConquer 분할 정복
+            long DaC(long a, long b)
+            {
+                if (b == 1)
+                    return a % c;
+
+                // 지수의 절반에 해당하는 값을 재귀로 풀이
+                long value = DaC(a, b / 2);
+
+                // 짝수일 경우
+                if (b % 2 == 0)
+                    return value * value % c;
+                else // 홀수 일 경우
+                    return (value * value % c) * a % c;
+            }
+        }
+
         public void Q1654()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
@@ -2632,6 +2666,59 @@ namespace BackjoonProject
             // a = n(c-b)
             // a / (c-b) = n
             Console.WriteLine((a / (c - b)) + 1);
+        }
+
+        public void Q1759()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int L = int.Parse(input[0]);
+            int C = int.Parse(input[1]);
+
+            string[] arr = reader.ReadLine().Split();
+            Array.Sort(arr);
+
+            char[] screct = new char[L];
+
+            DFS(0, 0);
+
+            writer.Close();
+            reader.Close();
+
+            void DFS(int start, int count)
+            {
+                if (count == L) // 암호 L개가 채워졌을 때
+                {
+                    int vowel = 0;
+                    for (int i = 0; i < L; i++)
+                    {
+                        if (screct[i] == 'a' || screct[i] == 'e' || screct[i] == 'i'
+                            || screct[i] == 'o' || screct[i] == 'u')
+                        {
+                            vowel++;
+                        }
+                    }
+
+                    if (vowel >= 1 && L - vowel >= 2)
+                    {
+                        for (int i = 0; i < L; i++)
+                        {
+                            writer.Write($"{screct[i]}");
+                        }
+                        writer.WriteLine();
+                    }
+
+                    return;
+                }
+
+                for (int i = start; i < C; i++) // 입력 받은 암호를 전부 탐색
+                {
+                    screct[count] = char.Parse(arr[i]);
+                    DFS(i + 1, count + 1); // 다음 암호를 입력하는 재귀함수
+                }
+            }
         }
 
         public void Q1789()

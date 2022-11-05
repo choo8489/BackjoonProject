@@ -63,6 +63,23 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2163()
+        {
+            //2163
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+
+            WriteLine(N * M - 1);
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q2164()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
