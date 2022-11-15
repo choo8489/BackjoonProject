@@ -365,6 +365,33 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q2455()
+        {
+            // 2455
+            // https://www.acmicpc.net/problem/2455
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int result = 0;
+            int max = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+                int[] input = Array.ConvertAll(reader.ReadLine().Split(), int.Parse);
+
+                result += input[1]; // 탄 사람의 수
+                result -= input[0]; // 내린 사람의 수
+
+                if (max < result) // 최대 값 체크
+                    max = result;
+            }
+
+            writer.WriteLine(max);
+
+            reader.Close();
+            writer.Close();
+        }
+
         public void Q2475()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
