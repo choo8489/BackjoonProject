@@ -1556,6 +1556,47 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1246()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+            int[] P = new int[M];
+
+            for (int i = 0; i < M; i++)
+            {
+                P[i] = int.Parse(reader.ReadLine());
+            }
+
+            Array.Sort(P); // 오름차순으로 정렬
+
+            int temp;
+            int price = 0;
+            int max = 0;
+
+            for (int i = 0; i < M; i++)
+            {
+                // 작은 수부터 순차적으로 계산
+                // 달걀을 사겠다는 사람이 많다면 = P[i] * N
+                // 달걀을 사겠다는 사람이 더더 적으면 = P[i] * (M - i)
+                temp = (M - i < N) ? P[i] * (M - i) : P[i] * N;
+
+                if (max < temp)
+                {
+                    price = P[i];
+                    max = temp;
+                }
+            }
+
+            writer.WriteLine($"{price} {max}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1251()
         {
             // 1251 단어 나누기
