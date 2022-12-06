@@ -2496,6 +2496,94 @@ namespace BackjoonProject
             Console.WriteLine((float)sum / n);
         }
 
+        public void Q1553()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            (int, int)[] d = new (int, int)[2] { (0, 1), (1, 0) };
+            int[,] grid = new int[8, 7];
+
+            // 격자 8*7 총 56개 입력
+            for (int i = 0; i < 8; i++)
+            {
+                char[] input = reader.ReadLine().ToCharArray();
+
+                for (int j = 0; j < 7; j++)
+                {
+                    grid[i, j] = int.Parse(input[j].ToString());
+                }
+            }
+
+            bool[,] visited = new bool[8, 7]; // 방문 했는 지 검사하는 변수
+            bool[,] domino = new bool[7, 7]; // 사용 한 도미노 인지 검사하는 변수
+
+            writer.WriteLine(Search(0, 0));
+
+            writer.Close();
+            reader.Close();
+
+            int Search(int x, int y)
+            {
+                if (x == 8) // 완전탐색이 끝났을 때 경우의 수 한개 추가
+                    return 1;
+
+                int count = 0;
+                int nextX = x; // 다음 탐색할 값
+                int nextY = y + 1; // 다음 탐색할 값
+
+                if (nextY == 7) // 열의 끝 (오른쪽) 도착 다음 행으로 이동
+                {
+                    nextX = x + 1;
+                    nextY = 0;
+                }
+
+                if (!visited[x, y]) // 방문하지 않았으면
+                {
+                    int current = grid[x, y]; // 현재 방문한 격자 값 ( 첫번째 값 )
+                    visited[x, y] = true;
+
+                    foreach (var (dx, dy) in d) // 방문한 값을 기준으로 오른쪽, 아래 검사 ( 두번째 값 )
+                    {
+                        int moveX = x + dx;
+                        int moveY = y + dy;
+
+                        if (moveX < 8 && moveY < 7) // 두번 째 값이 격자를 벗어나지 않는다면
+                        {
+                            int pair = grid[moveX, moveY]; // 두번 째 값
+
+                            // 두번째 값이 방문하지 않았고, 첫번째 값과 두번째 값이 사용하지 않았으면
+                            if (!visited[moveX, moveY] && !domino[current, pair])
+                            {
+                                // 도미노 두개 사용했다고 표기 (3,0) / (0,3)은 같은거기 때문
+                                domino[current, pair] = true;
+                                domino[pair, current] = true;
+
+                                visited[moveX, moveY] = true;
+
+                                // 다음 위치로 이동
+                                count += Search(nextX, nextY);
+
+                                // 백트래킹을 위하여 초기화
+                                visited[moveX, moveY] = false;
+                                domino[current, pair] = false;
+                                domino[pair, current] = false;
+                            }
+                        }
+                    }
+
+                    // 백트래킹을 위하여 초기화
+                    visited[x, y] = false;
+                    return count;
+                }
+                else
+                {
+                    // 방문했으면 다음 것으로 이동
+                    return Search(nextX, nextY);
+                }
+            }
+        }
+
         public void Q1568()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
