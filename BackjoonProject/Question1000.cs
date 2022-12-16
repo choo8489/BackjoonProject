@@ -1576,6 +1576,47 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q1246()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+            int[] P = new int[M];
+
+            for (int i = 0; i < M; i++)
+            {
+                P[i] = int.Parse(reader.ReadLine());
+            }
+
+            Array.Sort(P); // 오름차순으로 정렬
+
+            int temp;
+            int price = 0;
+            int max = 0;
+
+            for (int i = 0; i < M; i++)
+            {
+                // 작은 수부터 순차적으로 계산
+                // 달걀을 사겠다는 사람이 많다면 = P[i] * N
+                // 달걀을 사겠다는 사람이 더더 적으면 = P[i] * (M - i)
+                temp = (M - i < N) ? P[i] * (M - i) : P[i] * N;
+
+                if (max < temp)
+                {
+                    price = P[i];
+                    max = temp;
+                }
+            }
+
+            writer.WriteLine($"{price} {max}");
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1251()
         {
             // 1251 단어 나누기
@@ -2473,6 +2514,94 @@ namespace BackjoonProject
             }
 
             Console.WriteLine((float)sum / n);
+        }
+
+        public void Q1553()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            (int, int)[] d = new (int, int)[2] { (0, 1), (1, 0) };
+            int[,] grid = new int[8, 7];
+
+            // 격자 8*7 총 56개 입력
+            for (int i = 0; i < 8; i++)
+            {
+                char[] input = reader.ReadLine().ToCharArray();
+
+                for (int j = 0; j < 7; j++)
+                {
+                    grid[i, j] = int.Parse(input[j].ToString());
+                }
+            }
+
+            bool[,] visited = new bool[8, 7]; // 방문 했는 지 검사하는 변수
+            bool[,] domino = new bool[7, 7]; // 사용 한 도미노 인지 검사하는 변수
+
+            writer.WriteLine(Search(0, 0));
+
+            writer.Close();
+            reader.Close();
+
+            int Search(int x, int y)
+            {
+                if (x == 8) // 완전탐색이 끝났을 때 경우의 수 한개 추가
+                    return 1;
+
+                int count = 0;
+                int nextX = x; // 다음 탐색할 값
+                int nextY = y + 1; // 다음 탐색할 값
+
+                if (nextY == 7) // 열의 끝 (오른쪽) 도착 다음 행으로 이동
+                {
+                    nextX = x + 1;
+                    nextY = 0;
+                }
+
+                if (!visited[x, y]) // 방문하지 않았으면
+                {
+                    int current = grid[x, y]; // 현재 방문한 격자 값 ( 첫번째 값 )
+                    visited[x, y] = true;
+
+                    foreach (var (dx, dy) in d) // 방문한 값을 기준으로 오른쪽, 아래 검사 ( 두번째 값 )
+                    {
+                        int moveX = x + dx;
+                        int moveY = y + dy;
+
+                        if (moveX < 8 && moveY < 7) // 두번 째 값이 격자를 벗어나지 않는다면
+                        {
+                            int pair = grid[moveX, moveY]; // 두번 째 값
+
+                            // 두번째 값이 방문하지 않았고, 첫번째 값과 두번째 값이 사용하지 않았으면
+                            if (!visited[moveX, moveY] && !domino[current, pair])
+                            {
+                                // 도미노 두개 사용했다고 표기 (3,0) / (0,3)은 같은거기 때문
+                                domino[current, pair] = true;
+                                domino[pair, current] = true;
+
+                                visited[moveX, moveY] = true;
+
+                                // 다음 위치로 이동
+                                count += Search(nextX, nextY);
+
+                                // 백트래킹을 위하여 초기화
+                                visited[moveX, moveY] = false;
+                                domino[current, pair] = false;
+                                domino[pair, current] = false;
+                            }
+                        }
+                    }
+
+                    // 백트래킹을 위하여 초기화
+                    visited[x, y] = false;
+                    return count;
+                }
+                else
+                {
+                    // 방문했으면 다음 것으로 이동
+                    return Search(nextX, nextY);
+                }
+            }
         }
 
         public void Q1568()

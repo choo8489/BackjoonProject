@@ -1149,6 +1149,40 @@ namespace BackjoonProject
             reader.Close();
         }
 
+        public void Q13417()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            int T = int.Parse(reader.ReadLine());
+            List<char> result = new List<char>();
+
+            for (int i = 0; i < T; i++)
+            {
+                int N = int.Parse(reader.ReadLine());
+                char[] input = Array.ConvertAll(reader.ReadLine().Split(), char.Parse);
+
+                result.Add(input[0]);
+
+                for (int j = 1; j < N; j++)
+                {
+                    if (result[0] >= input[j])
+                        result.Insert(0, input[j]);
+                    else
+                        result.Add(input[j]);
+                }
+
+                foreach (var o in result)
+                    writer.Write(o);
+
+                writer.WriteLine();
+                result.Clear();
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q14469()
         {
             StreamWriter writer = new StreamWriter(OpenStandardOutput());
