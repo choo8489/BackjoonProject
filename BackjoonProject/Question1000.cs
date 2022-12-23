@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
-
+using System.Text.RegularExpressions;
 using static System.Console;
 using static BackjoonProject.Tools;
 
@@ -358,6 +358,26 @@ namespace BackjoonProject
 
                 return result;
             }
+        }
+
+        public void Q1013()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            // (100+1+ | 01)+
+            int N = int.Parse(reader.ReadLine());
+
+            Regex regex = new Regex("^(100+1+|01)+$");
+
+            for (int i = 0; i < N; i++)
+            {
+                string input = reader.ReadLine();
+                writer.WriteLine(regex.IsMatch(input) ? "YES" : "NO");
+            }
+
+            writer.Close();
+            reader.Close();
         }
 
         public void Q1015()
