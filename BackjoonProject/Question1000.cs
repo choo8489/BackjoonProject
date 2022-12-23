@@ -2850,6 +2850,45 @@ namespace BackjoonProject
             }
         }
 
+        public void Q1764()
+        {
+            StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
+            StreamReader reader = new StreamReader(Console.OpenStandardInput());
+
+            string[] input = reader.ReadLine().Split();
+
+            int N = int.Parse(input[0]);
+            int M = int.Parse(input[1]);
+
+            Dictionary<string, bool> names = new Dictionary<string, bool>();
+
+            List<string> result = new List<string>();
+
+            for (int i = 0; i < N; i++)
+            {
+                string name = reader.ReadLine();
+                names.Add(name, true);
+            }
+
+            for (int j = 0; j < M; j++)
+            {
+                string name = reader.ReadLine();
+                if (names.ContainsKey(name))
+                    result.Add(name);
+            }
+
+            result.Sort();
+            writer.WriteLine(result.Count);
+
+            foreach (var name in result)
+            {
+                writer.WriteLine(name);
+            }
+
+            writer.Close();
+            reader.Close();
+        }
+
         public void Q1789()
         {
             StreamWriter writer = new StreamWriter(Console.OpenStandardOutput());
